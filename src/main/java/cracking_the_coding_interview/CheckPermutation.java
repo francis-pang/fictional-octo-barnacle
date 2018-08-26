@@ -2,6 +2,11 @@ package cracking_the_coding_interview;
 
 import java.util.Hashtable;
 
+/**
+ * Check Permutation: Given two strings, write a method to decide if one is a permutation of the other.
+ * @author franc
+ *
+ */
 public class CheckPermutation {
 	public boolean isStringPermutable (String stringA, String stringB){
 		if (stringA == null || stringB == null) {
