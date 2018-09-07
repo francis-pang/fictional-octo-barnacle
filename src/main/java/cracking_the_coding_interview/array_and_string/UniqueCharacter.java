@@ -1,4 +1,4 @@
-package cracking_the_coding_interview;
+package cracking_the_coding_interview.array_and_string;
 
 // Implement an algorithm to determine if a string has all unique characters. What if you cannot use additional data structures?
 public class UniqueCharacter {

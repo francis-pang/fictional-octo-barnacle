@@ -1,4 +1,4 @@
-package cracking_the_coding_interview;
+package cracking_the_coding_interview.array_and_string;
 
 import java.util.Hashtable;
 

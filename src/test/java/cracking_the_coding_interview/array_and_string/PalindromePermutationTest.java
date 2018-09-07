@@ -1,7 +1,8 @@
-package cracking_the_coding_interview;
+package cracking_the_coding_interview.array_and_string;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import cracking_the_coding_interview.array_and_string.PalindromePermutation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
