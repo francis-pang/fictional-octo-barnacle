@@ -1,4 +1,4 @@
-package cracking_the_coding_interview;
+package cracking_the_coding_interview.array_and_string;
 
 /**
  * URLify: Write a method to replace all spaces in a string with '%20: You may assume that the string has sufficient 

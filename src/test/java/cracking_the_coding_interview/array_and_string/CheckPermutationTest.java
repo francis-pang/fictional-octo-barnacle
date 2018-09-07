@@ -1,7 +1,8 @@
-package cracking_the_coding_interview;
+package cracking_the_coding_interview.array_and_string;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import cracking_the_coding_interview.array_and_string.CheckPermutation;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
