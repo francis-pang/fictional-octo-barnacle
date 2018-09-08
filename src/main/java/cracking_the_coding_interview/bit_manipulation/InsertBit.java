@@ -7,10 +7,9 @@ public class InsertBit {
 		int clearBit = ~0;
 		clearBit = clearBit << j + 1;
 		int rightClearBit = 1;
-		int a = 0;
-		do {
+		for(int a = 0; a < i -1; a++){
 			rightClearBit = (int) (rightClearBit + Math.pow(2, a++));
-		} while(a < i - 1);
+		}
 		clearBit = clearBit | rightClearBit;
 		n = n & clearBit;
 		// Shift m to starting position
