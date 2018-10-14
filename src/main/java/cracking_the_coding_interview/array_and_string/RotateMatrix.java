@@ -19,7 +19,6 @@ public class RotateMatrix {
 			leftBound++;
 			rightBound--;
 		} while(leftBound < rightBound);
-		printMatrix(this.matrix);
 		return this.matrix;
 	}
 
@@ -34,14 +33,5 @@ public class RotateMatrix {
 			b = swap;
 		}
 		matrix[a][b] = temp;
-	}
-
-	public static void printMatrix(int[][] matrix) {
-		for (int i = 0; i < matrix.length; i++) {
-			for (int j = 0; j < matrix.length; j++) {
-				System.out.print("{" + matrix[i][j] + "},");
-			}
-			System.out.println();
-		}
 	}
 }

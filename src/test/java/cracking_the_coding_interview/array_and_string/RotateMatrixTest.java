@@ -15,7 +15,7 @@ class RotateMatrixTest {
 	@Test
 	void testOneByOneMatrix() {
 		int[][] oneByOneMatrix = {{4}};
-		assertTrue(isTwoMatrixSame(oneByOneMatrix, rotateMatrix.rotateTwoDimensionalMatrix(oneByOneMatrix)));
+		assertTrue(Matrix.isTwoMatrixSame(oneByOneMatrix, rotateMatrix.rotateTwoDimensionalMatrix(oneByOneMatrix)));
 	}
 
 	@Test
@@ -24,7 +24,7 @@ class RotateMatrixTest {
 							  {3, 4}};
 		int [][] expectedMatrix =  {{2, 4},
 									{1, 3}};
-		assertTrue(isTwoMatrixSame(expectedMatrix, rotateMatrix.rotateTwoDimensionalMatrix(testMatrix)));
+		assertTrue(Matrix.isTwoMatrixSame(expectedMatrix, rotateMatrix.rotateTwoDimensionalMatrix(testMatrix)));
 	}
 
 	@Test
@@ -39,17 +39,6 @@ class RotateMatrixTest {
 								  {62, 67, 81, 26, 90},
 								  {14, 54, 28, 64, 76},
 								  {96, 20, 94, 36, 64}};
-		assertTrue(isTwoMatrixSame(expectedMatrix, rotateMatrix.rotateTwoDimensionalMatrix(testMatrix)));
-	}
-
-	private boolean isTwoMatrixSame(int[][] matrixA, int[][] matrixB) {
-		for (int i = 0; i < matrixA.length; i++) {
-			for (int j = 0; j < matrixA.length; j++) {
-				if (matrixA[i][j] != matrixB[i][j]) {
-					return false;
-				}
-			}
-		}
-		return true;
+		assertTrue(Matrix.isTwoMatrixSame(expectedMatrix, rotateMatrix.rotateTwoDimensionalMatrix(testMatrix)));
 	}
 }
