@@ -5,7 +5,7 @@ class NumberOfIslands {
         int numberOfIslandFound = 0;
         for (int row = 0; row < grid.length; row++) {
             for (int column = 0; column < grid[row].length; column++) {
-                // Create exception for starting coordinates
+                // Create exception for starting point
                 if (grid[row][column] == '1') {
                     numberOfIslandFound++;
                     grid = destroyFoundIsland(grid, row, column);
