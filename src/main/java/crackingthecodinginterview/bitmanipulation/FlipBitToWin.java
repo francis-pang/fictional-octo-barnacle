@@ -14,9 +14,7 @@ public class FlipBitToWin {
     for (char bit : numberBinaryForm) {
       if (bit == '1') {
         currentOnesLength++;
-      }
-      // bit == 0
-      else if (currentOnesLength == 0) { // Check if this is the first zero
+      } else if (currentOnesLength == 0) { // Check if this is the first zero
         currentZeroLength++;
       } else {
         longestSequence = calculateLongestSequence(longestSequence, lastOnesLength, currentOnesLength,

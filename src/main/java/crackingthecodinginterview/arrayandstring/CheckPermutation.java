@@ -8,6 +8,12 @@ import java.util.Hashtable;
  * @author franc
  */
 public class CheckPermutation {
+  /**
+   * Returns <i>true</i> if <i>stringA</i> is a permutation of <i>stringB</i>, else <i>false</i>.
+   * @param stringA the first input string
+   * @param stringB the comparing input string
+   * @return <i>true</i> if <i>stringA</i> is a permutation of <i>stringB</i>, else <i>false</i>
+   */
   public boolean isStringPermutable(String stringA, String stringB) {
     if (stringA == null || stringB == null) {
       return false;
@@ -29,7 +35,6 @@ public class CheckPermutation {
 
   private Hashtable<Character, Integer> insertToHashtable(String string) {
     Hashtable<Character, Integer> stringHashtable = new Hashtable<Character, Integer>();
-
     for (int i = 0; i < string.length(); i++) {
       char strChar = string.charAt(i);
       if (stringHashtable.containsKey(strChar)) {
@@ -46,8 +51,8 @@ public class CheckPermutation {
   private boolean isStringInsideStringHashtable(String string, Hashtable<Character, Integer> stringHashtable) {
     for (int i = 0; i < string.length(); i++) {
       char strChar = string.charAt(i);
-      if (stringHashtable.containsKey(strChar) &&
-          stringHashtable.get(strChar) > 0) {
+      if (stringHashtable.containsKey(strChar)
+          && stringHashtable.get(strChar) > 0) {
         int currentValue = stringHashtable.get(strChar);
         stringHashtable.put(strChar,
             --currentValue);

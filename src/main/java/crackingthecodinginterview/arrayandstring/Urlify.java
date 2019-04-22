@@ -27,7 +27,7 @@ public class Urlify {
   }
 
   /**
-   * return -1 if the whole string has no letter
+   * return -1 if the whole string has no letter.
    **/
   private int locateFirstNonEmptyChar(char[] string) {
     final int FIRST_CHAR_NOT_FOUND = -1;

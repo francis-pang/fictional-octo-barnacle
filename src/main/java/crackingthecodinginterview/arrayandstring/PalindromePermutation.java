@@ -1,12 +1,5 @@
-/**
- *
- */
 package crackingthecodinginterview.arrayandstring;
 
-/**
- * @author franc
- *
- */
 public class PalindromePermutation {
   public boolean isStringAPermutationOfPalindrome(String string) {
     string = string.toUpperCase();
@@ -18,6 +11,8 @@ public class PalindromePermutation {
         return true;
       case 2:
         return (string.charAt(0) == string.charAt(1) ? true : false);
+      default:
+
     }
 
     // Building the array

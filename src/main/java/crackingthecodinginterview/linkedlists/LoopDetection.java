@@ -9,16 +9,16 @@ public class LoopDetection {
     ListNode slowRunnerNode = head.next;
     int counter = 0;
     while (fastRunnerNode != slowRunnerNode) {
-      System.out.println("Inside " + counter++ + " iteration. Fast Runner is at " + fastRunnerNode.value + "; Slow " +
-          "runner is at " + slowRunnerNode.value);
+      System.out.println("Inside " + counter++ + " iteration. Fast Runner is at " + fastRunnerNode.value + "; Slow "
+          + "runner is at " + slowRunnerNode.value);
       fastRunnerNode = fastRunnerNode.next.next;
       slowRunnerNode = slowRunnerNode.next;
     }
     System.out.println("Collision point is at " + fastRunnerNode.value);
     slowRunnerNode = head;
     while (fastRunnerNode != slowRunnerNode) {
-      System.out.println("Inside. Fast Runner is at " + fastRunnerNode.value + "; Slow " +
-          "runner is at " + slowRunnerNode.value);
+      System.out.println("Inside. Fast Runner is at " + fastRunnerNode.value + "; Slow "
+          + "runner is at " + slowRunnerNode.value);
       fastRunnerNode = fastRunnerNode.next;
       slowRunnerNode = slowRunnerNode.next;
     }

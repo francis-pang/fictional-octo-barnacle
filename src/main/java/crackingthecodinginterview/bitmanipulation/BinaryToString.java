@@ -2,8 +2,8 @@ package crackingthecodinginterview.bitmanipulation;
 
 public class BinaryToString {
   public String binaryToString(double number) {
-    if (number < 0 ||
-        number >= 1) {
+    if (number < 0
+        || number >= 1) {
       return "ERROR";
     }
     final int MAXIMUM_CHARACTERS = 32;
