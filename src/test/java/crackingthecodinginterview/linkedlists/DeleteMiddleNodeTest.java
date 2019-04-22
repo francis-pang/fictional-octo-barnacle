@@ -1,6 +1,6 @@
-package crackingthecodinginterview.linkedlists.del_mid_node;
+package crackingthecodinginterview.linkedlists;
 
-import crackingthecodinginterview.linkedlists.DeleteMiddleNode;
+import crackingthecodinginterview.linkedlists.DeleteMiddleNode.Node;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ class DeleteMiddleNodeTest {
     testLinkedList.add(5);
 
     // Get the 2nd node
-    Node root = testLinkedList.getFirst();
+    DeleteMiddleNode.Node root = testLinkedList.getFirst();
     Node middleNode = root.getNext();
     deleteMiddleNode.deleteMiddleNode(middleNode);
 
@@ -60,5 +60,27 @@ class DeleteMiddleNodeTest {
     assertEquals(7, (int) node.getElement());
     node = node.getNext();
     assertNull(node);
+  }
+
+  class SinglyLinkedList {
+    Node head;
+    Node last;
+
+    public void add(Integer element) {
+      if(head == null) {
+        head = new Node(element, last);
+      } else if(last == null){
+        last = new Node(element, null);
+        head.setNext(last);
+      } else {
+        Node newLast = new Node(element, null);
+        last.setNext(newLast);
+        last = newLast;
+      }
+    }
+
+    public Node getFirst() {
+      return head;
+    }
   }
 }

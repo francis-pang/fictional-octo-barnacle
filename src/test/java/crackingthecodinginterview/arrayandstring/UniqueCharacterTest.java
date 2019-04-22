@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class UniqueCharacterTest {
 
-    @Test
-    void testUniqueSimpleString() {
-        assertEquals(true, UniqueCharacter.isUnique("GTYHBN"));
-    }
+  @Test
+  void testUniqueSimpleString() {
+    assertEquals(true, UniqueCharacter.isUnique("GTYHBN"));
+  }
 
-    @Test
-    void testNonUniqueSimpleString() {
-        assertEquals(false, UniqueCharacter.isUnique("GTYBBN"));
-    }
+  @Test
+  void testNonUniqueSimpleString() {
+    assertEquals(false, UniqueCharacter.isUnique("GTYBBN"));
+  }
 }
