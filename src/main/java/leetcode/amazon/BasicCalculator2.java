@@ -1,23 +1,19 @@
-package crackingthecodinginterview.moderate;
+package leetcode.amazon;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Stack;
 
-/**
- * Calculator: Given an arithmetic equation consisting of positive integers, +, -, * and / (no parentheses). compute
- * the result.
- */
-public class Calculator {
+public class BasicCalculator2 {
   short numberOfFirstOrderOperator = 0;
   Stack<ArithmeticExpression> secondOrderStack = new Stack<>();
   Queue<ArithmeticExpression> expressionQueue = new ArrayDeque<>();
 
-  public double calculate(String expression){
+  public int calculate(String s) {
     StringBuilder operand = new StringBuilder(); // Add a positive sign in front first
     char previousOperator = ' ';
     char expressionOperator = '+';
-    for (char character : expression.toCharArray()) {
+    for (char character : s.toCharArray()) {
       if (character == ' ') {
         continue;
       } else if (Character.isDigit(character)) {
@@ -43,7 +39,7 @@ public class Calculator {
 
     // Evaluate the re-ordered expression
     ArithmeticExpression firstArithmeticExpression = expressionQueue.poll();
-    double leftOperand = (firstArithmeticExpression.operator == '+') ? firstArithmeticExpression.value :
+    int leftOperand = (firstArithmeticExpression.operator == '+') ? firstArithmeticExpression.value :
         (firstArithmeticExpression.value * -1);
     while(!expressionQueue.isEmpty()) {
       ArithmeticExpression arithmeticExpression = expressionQueue.poll();
@@ -51,7 +47,7 @@ public class Calculator {
         numberOfFirstOrderOperator--;
         expressionQueue.offer(new ArithmeticExpression('+', leftOperand));
         leftOperand = (arithmeticExpression.operator == '+') ? arithmeticExpression.value :
-            (arithmeticExpression.value * -1);
+            Math.negateExact(arithmeticExpression.value);
       } else {
         leftOperand = calculateSingleArithmeticOperation(leftOperand, arithmeticExpression.value,
             arithmeticExpression.operator);
@@ -83,7 +79,7 @@ public class Calculator {
     }
   }
 
-  private double calculateSingleArithmeticOperation (double firstNumber, double secondNumber, char operator) {
+  private int calculateSingleArithmeticOperation (int firstNumber, int secondNumber, char operator) {
     switch(operator) {
       case '+':
         return firstNumber + secondNumber;
@@ -100,12 +96,12 @@ public class Calculator {
 
   protected class ArithmeticExpression {
     public char operator;
-    public double value;
+    public int value;
 
     public ArithmeticExpression() {
     }
 
-    public ArithmeticExpression(char operator, double value) {
+    public ArithmeticExpression(char operator, int value) {
       this.operator = operator;
       this.value = value;
     }
