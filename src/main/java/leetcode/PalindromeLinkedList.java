@@ -1,4 +1,4 @@
-package leetcode.amazon;
+package leetcode;
 
 /**
  * Definition for singly-linked list.

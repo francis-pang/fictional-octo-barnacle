@@ -1,4 +1,4 @@
-package leetcode.amazon;
+package leetcode;
 
 import java.util.HashSet;
 

@@ -1,4 +1,4 @@
-package leetcode.amazon;
+package leetcode;
 
 // https://leetcode.com/problems/min-stack/
 
