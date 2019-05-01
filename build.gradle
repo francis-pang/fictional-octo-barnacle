@@ -18,3 +18,14 @@ dependencies {
             'org.junit.jupiter:junit-jupiter-engine:5.+'
     )
 }
+
+tasks.withType(JavaCompile) {
+    /*
+     * Taken from https://docs.oracle.com/javase/10/tools/javac.htm#GUID-AEEC9F07-CB49-4E96-8BC7-BCC2C7F725C9__ENABLEORDISABLEWARNINGSWITHTHE-XLIN-7D3DB0EE
+     * Enable warning for unchecked conversion warnings that are mandated by the Java Language Specification. For example:
+     * List l = new ArrayList<Number>();
+     * List<String> ls = l;       // unchecked warning
+     * During type erasure, the types ArrayList<Number> and List<String> become ArrayList and List, respectively.
+     */
+    options.compilerArgs << '-Xlint:unchecked'
+}
