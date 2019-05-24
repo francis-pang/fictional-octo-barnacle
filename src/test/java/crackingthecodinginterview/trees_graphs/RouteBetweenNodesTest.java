@@ -1,5 +1,6 @@
 package crackingthecodinginterview.trees_graphs;
 
+import crackingthecodinginterview.treesandgraphs.RouteBetweenNodes.DirectedNode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RouteBetweenNodesTest {
     private static RouteBetweenNodes routeBetweenNodes;
-    private static DirectedGraph directedGraph;
+  private static RouteBetweenNodes.DirectedGraph directedGraph;
     private static DirectedNode directedNode1;
     private static DirectedNode directedNode2;
     private static DirectedNode directedNode3;
@@ -40,7 +41,7 @@ class RouteBetweenNodesTest {
         directedNodes[3] = directedNode4;
         directedNodes[4] = directedNode5;
         directedNodes[5] = directedNode6;
-        directedGraph = new DirectedGraph(directedNodes);
+      directedGraph = new RouteBetweenNodes.DirectedGraph(directedNodes);
 
         routeBetweenNodes = new RouteBetweenNodes();
     }
