@@ -1,9 +1,8 @@
-package cracking_the_coding_interview.trees_graphs;
+package crackingthecodinginterview.trees_graphs.route_between_nodes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringJoiner;
 
 public class DirectedNode {
     private List<DirectedNode> connectedNodes;

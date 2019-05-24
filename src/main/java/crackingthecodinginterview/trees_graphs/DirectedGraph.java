@@ -1,4 +1,4 @@
-package cracking_the_coding_interview.trees_graphs.route_between_nodes;
+package crackingthecodinginterview.trees_graphs;
 
 import java.util.Arrays;
 

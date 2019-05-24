@@ -1,8 +1,5 @@
-package cracking_the_coding_interview.trees_graphs.route_between_nodes;
+package crackingthecodinginterview.trees_graphs;
 
-import cracking_the_coding_interview.trees_graphs.route_between_nodes.DirectedGraph;
-import cracking_the_coding_interview.trees_graphs.route_between_nodes.DirectedNode;
-import cracking_the_coding_interview.trees_graphs.route_between_nodes.RouteBetweenNodes;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

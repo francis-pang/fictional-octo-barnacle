@@ -1,4 +1,4 @@
-package cracking_the_coding_interview.trees_graphs;
+package crackingthecodinginterview.trees_graphs.route_between_nodes;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

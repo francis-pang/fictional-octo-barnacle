@@ -1,4 +1,4 @@
-package cracking_the_coding_interview.trees_graphs;
+package crackingthecodinginterview.trees_graphs;
 
 import java.util.LinkedList;
 import java.util.Queue;
