@@ -1,4 +1,4 @@
-package crackingthecodinginterview.trees_graphs;
+package crackingthecodinginterview.treesandgraphs;
 
 public class MinimalTree {
     public BinaryTreeNode createBinarySearchTreeFromAscendingArray(int[] array) {
@@ -34,7 +34,7 @@ public class MinimalTree {
         return root; // stub
     }
 
-    public static void main(final String args[]) {
+    public static void main(final String[] args) {
         double number = Math.log(8) / Math.log(2);
         System.out.println("Is this whole number: " + ((number % 1) == 0));
     }

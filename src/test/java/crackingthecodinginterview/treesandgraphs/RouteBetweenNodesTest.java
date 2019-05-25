@@ -1,11 +1,12 @@
-package crackingthecodinginterview.trees_graphs;
+package crackingthecodinginterview.treesandgraphs;
 
 import crackingthecodinginterview.treesandgraphs.RouteBetweenNodes.DirectedNode;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RouteBetweenNodesTest {
     private static RouteBetweenNodes routeBetweenNodes;

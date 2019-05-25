@@ -1,4 +1,4 @@
-package crackingthecodinginterview.trees_graphs;
+package crackingthecodinginterview.treesandgraphs;
 
 import java.util.ArrayList;
 import java.util.Arrays;
