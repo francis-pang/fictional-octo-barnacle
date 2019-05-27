@@ -1,8 +1,5 @@
 package leetcode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class BalancedBinaryTree {
   /**
    * Definition for a binary tree node.
@@ -14,41 +11,30 @@ public class BalancedBinaryTree {
    * }
    */
   class Solution {
-    private Map<TreeNode, Integer> treeNodeHeightMap;
-
     public boolean isBalanced(TreeNode root) {
-      treeNodeHeightMap = new HashMap<>();
-      return isSubTreeBalanced(root); // stub
+      return (calculateHeight(root) != -2);
     }
 
-    private boolean isSubTreeBalanced(TreeNode treeNode) {
-      if (treeNode == null) {
-        return true;
+    public int calculateHeight(TreeNode node) {
+      if (node == null) {
+        return -1;
       }
 
-      int leftSubTreeHeight = 0;
-      if (treeNode.left != null) {
-        if (!isSubTreeBalanced(treeNode.left)) {
-          return false;
-        }
-        leftSubTreeHeight = treeNodeHeightMap.get(treeNode.left);
+      int leftSubTreeHeight = calculateHeight(node.left);
+      if (leftSubTreeHeight == -2) {
+        return -2;
       }
 
-      int rightSubTreeHeight = 0;
-      if (treeNode.right != null) {
-        if (!isSubTreeBalanced(treeNode.right)) {
-          return false;
-        }
-        rightSubTreeHeight = treeNodeHeightMap.get(treeNode.right);
+      int rightSubTreeHeight = calculateHeight(node.right);
+      if (rightSubTreeHeight == -2) {
+        return -2;
       }
 
       if (Math.abs(leftSubTreeHeight - rightSubTreeHeight) > 1) {
-        return false;
+        return -2;
       }
 
-      int height = Math.max(leftSubTreeHeight, rightSubTreeHeight) + 1;
-      treeNodeHeightMap.put(treeNode, height);
-      return true;
+      return Math.max(leftSubTreeHeight, rightSubTreeHeight) + 1;
     }
 
     class TreeNode {
