@@ -11,10 +11,10 @@ repositories {
 }
 
 dependencies {
-    testCompileOnly (
+    testImplementation (
             'org.junit.jupiter:junit-jupiter-api:5.+'
     )
-    testRuntimeOnly (
+    testImplementation (
             'org.junit.jupiter:junit-jupiter-engine:5.+'
     )
 }
