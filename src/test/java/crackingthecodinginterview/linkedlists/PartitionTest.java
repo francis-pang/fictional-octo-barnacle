@@ -8,12 +8,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-class ParititionTest {
-  private static Paritition paritition;
+class PartitionTest {
+  private static Partition partition;
 
   @BeforeAll
   static void setUpOnce() {
-    paritition = new Paritition();
+    partition = new Partition();
   }
 
   @Test
@@ -24,7 +24,7 @@ class ParititionTest {
     // Create expected linked list
     Integer[] expectedNumbers = {1, 2, 3, 5, 8, 5, 10};
     List<Integer> expectedList = Arrays.asList(expectedNumbers);
-    List<Integer> actualList = paritition.partitionListBasedOnValue(testList, 5);
+    List<Integer> actualList = partition.partitionListBasedOnValue(testList, 5);
     assertArrayEquals(expectedList.toArray(), actualList.toArray());
   }
 
@@ -36,7 +36,7 @@ class ParititionTest {
     // Create expected linked list
     Integer[] expectedNumbers = {3, 6, 8};
     List<Integer> expectedList = Arrays.asList(expectedNumbers);
-    List<Integer> actualList = paritition.partitionListBasedOnValue(testList, 5);
+    List<Integer> actualList = partition.partitionListBasedOnValue(testList, 5);
     assertArrayEquals(expectedList.toArray(), actualList.toArray());
   }
 
@@ -48,7 +48,7 @@ class ParititionTest {
     // Create expected linked list
     Integer[] expectedNumbers = {1, 2, 3};
     List<Integer> expectedList = Arrays.asList(expectedNumbers);
-    List<Integer> actualList = paritition.partitionListBasedOnValue(testList, 2);
+    List<Integer> actualList = partition.partitionListBasedOnValue(testList, 2);
     assertArrayEquals(expectedList.toArray(), actualList.toArray());
   }
 }
