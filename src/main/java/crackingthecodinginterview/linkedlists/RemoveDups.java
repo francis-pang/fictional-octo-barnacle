@@ -7,12 +7,9 @@ import java.util.Map;
 
 public class RemoveDups {
   public List removeDuplicate(List linkedList) {
-    Map occurrenceMap = new HashMap();
+    Map<Object, Boolean> occurrenceMap = new HashMap<>();
     if (linkedList.size() < 2) {
       return linkedList;
-    }
-    for (Object element : linkedList) {
-
     }
     Iterator iterator = linkedList.iterator();
     int iteratorIndex = 0;

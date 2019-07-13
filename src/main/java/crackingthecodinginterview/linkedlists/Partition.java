@@ -3,15 +3,15 @@ package crackingthecodinginterview.linkedlists;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Paritition {
-  public List partitionListBasedOnValue(List linkedList, int value) {
-    LinkedList resultLinkedList = new LinkedList();
+public class Partition {
+  public List partitionListBasedOnValue(List<Integer> linkedList, int value) {
+    LinkedList<Integer> resultLinkedList = new LinkedList<>();
     for (Object element : linkedList) {
       int elementValue = (int) element;
       if (elementValue >= value) {
-        resultLinkedList.addLast(element);
+        resultLinkedList.addLast((Integer) element);
       } else {
-        resultLinkedList.addFirst(element);
+        resultLinkedList.addFirst((Integer) element);
       }
     }
     return resultLinkedList;

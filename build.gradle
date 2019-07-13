@@ -11,11 +11,10 @@ repositories {
 }
 
 dependencies {
-    testCompileOnly (
-            'org.junit.jupiter:junit-jupiter-api:5.+'
-    )
-    testRuntimeOnly (
-            'org.junit.jupiter:junit-jupiter-engine:5.+'
+    testImplementation (
+            'org.junit.jupiter:junit-jupiter-api:5.+',
+            'org.junit.jupiter:junit-jupiter-engine:5.+',
+            'org.assertj:assertj-core:3.12.2'
     )
 }
 

@@ -22,7 +22,7 @@ import java.util.Queue;
  * cache.get(3);       // returns 3
  * cache.get(4);       // returns 4
  */
-class LRUCache {
+public class LRUCache {
     private int capacity;
     private Map<Integer, Integer> lruCacheMap;
     private Queue<Integer> leastRecentlyUsedQueue;
