@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-class MedianFinder {
+public class MedianFinder {
     /*
      * Need to maintain a balanced binary search tree, so the root of the node is either the median node, or the left
      * side of
