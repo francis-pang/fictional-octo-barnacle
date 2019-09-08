@@ -3,9 +3,8 @@ package facebook.abcs.arraysandstrings;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * We consider two strings to be anagrams of each other if the first string's letters can be rearranged to form the
@@ -68,7 +67,7 @@ public class MakingAnagrams {
 
     // Complete the makingAnagrams function below.
     static int makingAnagrams(String s1, String s2) {
-      Map<Character, Integer> numberOfOffsetByCharacter = new HashMap<>();
+      ConcurrentHashMap<Character, Integer> numberOfOffsetByCharacter = new ConcurrentHashMap<>(s1.length() + s2.length());
       for (int charIndex = 0; charIndex < s1.length(); charIndex++) {
         numberOfOffsetByCharacter.compute(s1.charAt(charIndex), (character, count) -> (count == null) ? 1 : count + 1);
       }
@@ -76,11 +75,8 @@ public class MakingAnagrams {
         numberOfOffsetByCharacter.compute(s2.charAt(charIndex), ((character, count) -> (count == null) ? -1 :
             count - 1));
       }
-      int minimumCharacters = 0;
-      for (int value : numberOfOffsetByCharacter.values()) {
-        minimumCharacters += Math.abs(value);
-      }
-      return minimumCharacters;
+      return numberOfOffsetByCharacter.reduceValuesToInt(1,
+          (value) -> value, 0, (total, element) -> total + Math.abs(element));
     }
 
     private static final Scanner scanner = new Scanner(System.in);
