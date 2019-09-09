@@ -1,15 +1,15 @@
 Another useful reference to read: [Sorting Algorithm Cheat Sheet](https://www.interviewcake.com/sorting-algorithm-cheat-sheet)
 
-| sort                                      | average time complexity | space complexity | in-place | stable | online |
-|:------------------------------------------|:------------------------|:-----------------|:---------|:-------|:-------|
-| insertion sort                            | O(n<sup>2</sup>)        | O(1)             | Y        | Y      | N      |
-| selection sort                            | O(n<sup>2</sup>)        | O(1)             | Y        | N      | N      |
-| bubble sort                               | O(n<sup>2</sup>)        | O(1)             | Y        | Y      | N      |
-| quick sort                                | O(n log(n))             | O(log(n))        | Y        | N      | Y      |
-| merge sort                                | O(n log(n))             | O(n)             | N        | Y      | Y      |
-| heap sort (based on selection sort)       | O(n log(n))             | O(1)             | Y        | N      | Y      |
-| radix sort (sorting key with total order) | O(kc)                   | O(n+c)           | N        | Y      | Y      |
-| counting sort (positive integer only)     | O(n+k)                  | O(n+k)           | N        | Y      | Y      |
+| sort                                                | average time complexity | space complexity | in-place | stable | online |
+|:----------------------------------------------------|:------------------------|:-----------------|:---------|:-------|:-------|
+| insertion sort                                      | O(n<sup>2</sup>)        | O(1)             | Y        | Y      | N      |
+| selection sort                                      | O(n<sup>2</sup>)        | O(1)             | Y        | N      | N      |
+| bubble sort                                         | O(n<sup>2</sup>)        | O(1)             | Y        | Y      | N      |
+| quick sort                                          | O(n log(n))             | O(log(n))        | Y        | N      | Y      |
+| merge sort                                          | O(n log(n))             | O(n)             | N        | Y      | Y      |
+| heap sort (based on selection sort)                 | O(n log(n))             | O(1)             | Y        | N      | Y      |
+| radix sort (sorting key with Lexicographical order) | O(kc)                   | O(n+c)           | N        | Y      | Y      |
+| counting sort (positive integer only)               | O(n+k)                  | O(n+k)           | N        | Y      | Y      |
 
 
 **Note**:
@@ -31,4 +31,4 @@ Taken from [When is each sorting algorithm used](https://stackoverflow.com/a/193
 
 **Counting sort**: For integers with limited range
 
-**Radix sort**: For log(n) is significantly larger than c, the number of digits represent
+**Radix sort**: For log(n) is significantly larger than c, the number of digits
