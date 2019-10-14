@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.google;
 
 public class MinimumDominoRotationsForEqualRow {
   static class Solution {

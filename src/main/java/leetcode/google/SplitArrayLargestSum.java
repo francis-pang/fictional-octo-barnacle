@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.google;
 
 import java.time.Duration;
 import java.time.Instant;

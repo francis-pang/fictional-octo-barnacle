@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.google;
 
 public class ShortestWayToFormString {
   class Solution {
