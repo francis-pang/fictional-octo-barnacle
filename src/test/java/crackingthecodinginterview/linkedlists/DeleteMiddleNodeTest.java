@@ -1,10 +1,9 @@
 package crackingthecodinginterview.linkedlists;
 
-import crackingthecodinginterview.linkedlists.DeleteMiddleNode.Node;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DeleteMiddleNodeTest {
   private static DeleteMiddleNode deleteMiddleNode;
@@ -17,70 +16,37 @@ class DeleteMiddleNodeTest {
   @Test
   void deleteMidof3NodesList() {
     // Form a new linked list with element 1,3,5
-    SinglyLinkedList testLinkedList = new SinglyLinkedList();
-    testLinkedList.add(1);
-    testLinkedList.add(3);
-    testLinkedList.add(5);
-
+    DeleteMiddleNode.Node node1 = new DeleteMiddleNode.Node(1);
+    DeleteMiddleNode.Node node2 = new DeleteMiddleNode.Node(3);
+    DeleteMiddleNode.Node node3 = new DeleteMiddleNode.Node(5);
+    node1.next = node2;
+    node2.next = node3;
     // Get the 2nd node
-    DeleteMiddleNode.Node root = testLinkedList.getFirst();
-    Node middleNode = root.getNext();
-    deleteMiddleNode.deleteMiddleNode(middleNode);
+    deleteMiddleNode.deleteMiddleNode(node1);
 
     // Verification
-    Node node = testLinkedList.getFirst();
-    assertEquals(1, (int) node.getElement());
-    node = node.getNext();
-    assertEquals(5, (int) node.getElement());
-    node = node.getNext();
-    assertNull(node);
+    assertEquals(3, node1.value);
+    assertEquals(5, node1.next.value);
+    assertEquals(0, node1.next.next.value);
   }
 
   @Test
   void deleteMidOf4NodesList() {
     // Form a new linked list with element 1,3,5,7
-    SinglyLinkedList testLinkedList = new SinglyLinkedList();
-    testLinkedList.add(1);
-    testLinkedList.add(3);
-    testLinkedList.add(5);
-    testLinkedList.add(7);
+    DeleteMiddleNode.Node node1 = new DeleteMiddleNode.Node(1);
+    DeleteMiddleNode.Node node2 = new DeleteMiddleNode.Node(3);
+    DeleteMiddleNode.Node node3 = new DeleteMiddleNode.Node(5);
+    DeleteMiddleNode.Node node4 = new DeleteMiddleNode.Node(7);
+    node1.next = node2;
+    node2.next = node3;
+    node3.next = node4;
 
     // Get the 3rd node
-    Node root = testLinkedList.getFirst();
-    Node secondNode = root.getNext();
-    Node thirdNode = secondNode.getNext();
-    deleteMiddleNode.deleteMiddleNode(thirdNode);
+    deleteMiddleNode.deleteMiddleNode(node2);
 
     // Verification
-    Node node = testLinkedList.getFirst();
-    assertEquals(1, (int) node.getElement());
-    node = node.getNext();
-    assertEquals(3, (int) node.getElement());
-    node = node.getNext();
-    assertEquals(7, (int) node.getElement());
-    node = node.getNext();
-    assertNull(node);
-  }
-
-  class SinglyLinkedList {
-    Node head;
-    Node last;
-
-    public void add(Integer element) {
-      if(head == null) {
-        head = new Node(element, last);
-      } else if(last == null){
-        last = new Node(element, null);
-        head.setNext(last);
-      } else {
-        Node newLast = new Node(element, null);
-        last.setNext(newLast);
-        last = newLast;
-      }
-    }
-
-    public Node getFirst() {
-      return head;
-    }
+    assertEquals(5, node2.value);
+    assertEquals(7, node2.next.value);
+    assertEquals(0, node2.next.next.value);
   }
 }
