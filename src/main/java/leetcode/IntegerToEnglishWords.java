@@ -1,176 +1,106 @@
 package leetcode;
 
-import java.util.StringJoiner;
-
 public class IntegerToEnglishWords {
   public static void main(String[] args) {
-    Solution solution = new Solution();
-    System.out.println(solution.numberToWords(1000000000));
+    IntegerToEnglishWords englishInt = new IntegerToEnglishWords();
+    System.out.println(englishInt.numberToWords(123));
   }
 
-  static class Solution {
-    public String numberToWords(int num) {
-      final String WORD_IN_ZERO = "Zero";
-      if (num == 0) {
-        return WORD_IN_ZERO;
+  public String numberToWords(int num) {
+    String nStr = Integer.toString(num);
+    char[] nArray = nStr.toCharArray();
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < nArray.length; i++) {
+      int digitP = nArray.length - i;
+      char digit = nArray[i];
+      int digitValue = Integer.parseInt(Character.toString(digit));
+      if (digitP % 3 == 0) {
+        sb.append(convertToWord(digitValue) + " Hundred");
       }
-      // Constuct integer array
-      char[] splitNumbers = Integer.toString(num).toCharArray();
-      int[] numbers = new int[splitNumbers.length];
-      for (int index = 0; index < splitNumbers.length; index++) {
-        numbers[index] = Character.digit(splitNumbers[index], 10);
+      if (digitP % 3 == 1) {
+        sb.append(convertToWord(digit));
       }
-
-      StringJoiner wordsStringJoiner = new StringJoiner(" ");
-      boolean previousAllZero = true;
-      boolean previousNumberIsZero = true;
-      for (int index = 0; index < numbers.length; index++) {
-        int numberPosition = numbers.length - index;
-        switch (numberPosition % 3) {
-          case 0:
-            if (numbers[index] > 0) {
-              wordsStringJoiner = wordsStringJoiner.add(CardinalNumberBelowTen.resolve(numbers[index]));
-              wordsStringJoiner = wordsStringJoiner.add("Hundred");
-            }
-            break;
-          case 1:
-            if (numbers[index] > 0) {
-              wordsStringJoiner = wordsStringJoiner.add(CardinalNumberBelowTen.resolve(numbers[index]));
-              wordsStringJoiner = (AugmentativeSuffix.resolve(numberPosition) != null) ?
-                  wordsStringJoiner.add(AugmentativeSuffix.resolve(numberPosition)) : wordsStringJoiner;
-            } else {
-              wordsStringJoiner = addIfNotNull(wordsStringJoiner, numberPosition);
-            }
-            break;
-          case 2:
-            String presentWord = CardinalNumber.resolve(numbers[index] * 10 + numbers[index + 1]);
-            if (presentWord == null) {
-              wordsStringJoiner = (CardinalNumber.resolve(numbers[index] * 10) != null) ?
-                  wordsStringJoiner.add(CardinalNumber.resolve(numbers[index] * 10)) : wordsStringJoiner;
-            } else {
-              wordsStringJoiner = wordsStringJoiner.add(presentWord);
-              index++;
-              numberPosition--;
-              wordsStringJoiner = addIfNotNull(wordsStringJoiner, numberPosition);
-            }
-            break;
+      if (digitP % 3 == 2) {
+        if (digit == 1) {
+          char nextDigit = nArray[i + 1];
+          int value = digitValue * 10 + Integer.valueOf(nextDigit);
+          sb.append(convertToWord(value));
+          i++;
+          digitP = nArray.length - i;
+        } else {
+          sb.append(convertToWord(digitValue * 10));
         }
       }
-      return wordsStringJoiner.toString().trim();
-    }
-
-    private StringJoiner addIfNotNull(StringJoiner stringJoiner, int numberPosition) {
-      String suffix = AugmentativeSuffix.resolve(numberPosition);
-      if (suffix == null) {
-        return stringJoiner;
+      switch (digitP) {
+        case 4:
+          sb.append(" Thousand ");
+          continue;
+        case 7:
+          sb.append(" Million ");
+          continue;
       }
-      String[] strings = stringJoiner.toString().split(" ");
-      if (AugmentativeSuffix.resolve(strings[strings.length - 1]) < numberPosition) {
-        return stringJoiner.add(suffix);
-      }
-      return stringJoiner;
     }
+    return sb.toString();
   }
 
-  public enum AugmentativeSuffix {
-    THOUSAND("Thousand", 4),
-    MILLION("Million", 7),
-    BILLION("Billion", 10),
-    TRILLION("Trillion", 13),
-    QUINTILLION("Quintillion", 16),
-    SEXTILLION("Sextillion", 19);
-
-    private String name;
-    private int numberOfDigit;
-
-    AugmentativeSuffix(String name, int numberOfDigit) {
-      this.name = name;
-      this.numberOfDigit = numberOfDigit;
-    }
-
-    public static String resolve(int numberOfDigit) {
-      for (AugmentativeSuffix augmentativeSuffix : values()) {
-        if (augmentativeSuffix.numberOfDigit == numberOfDigit) {
-          return augmentativeSuffix.name;
-        }
-      }
-      return null;
-    }
-
-    public static int resolve(String name) {
-      for (AugmentativeSuffix augmentativeSuffix : values()) {
-        if (augmentativeSuffix.name.equals(name)) {
-          return augmentativeSuffix.numberOfDigit;
-        }
-      }
-      return -1;
-    }
-  }
-
-  public enum CardinalNumber {
-    TEN("Ten", 10),
-    ELEVEN("Eleven", 11),
-    TWELVE("Twelve", 12),
-    THIRTEEN("Thirteen", 13),
-    FOURTEEN("Fourteen", 14),
-    FIFTEEN("Fifteen", 15),
-    SIXTEEN("Sixteen", 16),
-    SEVENTEEN("Seventeen", 17),
-    EIGHTEEN("Eighteen", 18),
-    NINETEEN("Nineteen", 19),
-    TWENTY("Twenty", 20),
-    THIRTY("Thirty", 30),
-    FORTY("Forty", 40),
-    FIFTY("Fifty", 50),
-    SIXTY("Sixty", 60),
-    SEVENTY("Seventy", 70),
-    EIGHTY("Eighty", 80),
-    NINTY("Ninety", 90);
-
-    private String name;
-    private int value;
-
-    CardinalNumber(String name, int value) {
-      this.name = name;
-      this.value = value;
-    }
-
-    public static String resolve(int value) {
-      for (CardinalNumber cardinalNumber : values()) {
-        if (value == cardinalNumber.value) {
-          return cardinalNumber.name;
-        }
-      }
-      return null;
-    }
-  }
-
-  public enum CardinalNumberBelowTen {
-    ONE("One", 1),
-    TWO("Two", 2),
-    THREE("Three", 3),
-    FOUR("Four", 4),
-    FIVE("Five", 5),
-    SIX("Six", 6),
-    SEVEN("Seven", 7),
-    EIGHT("Eight", 8),
-    NINE("Nine", 9);
-
-    private String name;
-    private int value;
-
-    CardinalNumberBelowTen(String name, int value) {
-      this.name = name;
-      this.value = value;
-    }
-
-    public static String resolve(int value) {
-      for (CardinalNumberBelowTen cardinalNumberBelowTen : values()) {
-        if (value == cardinalNumberBelowTen.value) {
-          return cardinalNumberBelowTen.name;
-        }
-      }
-      return null;
+  private String convertToWord(int digit) {
+    switch (digit) {
+      case 1:
+        return "One";
+      case 2:
+        return "Two";
+      case 3:
+        return "Three";
+      case 4:
+        return "Four";
+      case 5:
+        return "Five";
+      case 6:
+        return "Six";
+      case 7:
+        return "Seven";
+      case 8:
+        return "Eight";
+      case 9:
+        return "Nine";
+      case 10:
+        return "Ten";
+      case 11:
+        return "Eleven";
+      case 12:
+        return "Twleve";
+      case 13:
+        return "Thirteen";
+      case 14:
+        return "Forteen";
+      case 15:
+        return "Fifteen";
+      case 16:
+        return "Sixteen";
+      case 17:
+        return "Seventeen";
+      case 18:
+        return "Eighteen";
+      case 19:
+        return "Ninteen";
+      case 20:
+        return "Twenty";
+      case 30:
+        return "Thirty";
+      case 40:
+        return "Forty";
+      case 50:
+        return "Fifty";
+      case 60:
+        return "Sixty";
+      case 70:
+        return "Seventy";
+      case 80:
+        return "Eighty";
+      case 90:
+        return "Ninety";
+      default:
+        return "";
     }
   }
 }
