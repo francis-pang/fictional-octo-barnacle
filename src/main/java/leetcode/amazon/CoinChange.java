@@ -23,7 +23,7 @@ public class CoinChange {
         return leastCoinUsed;
       }
 
-        }
+    }
 
     private int leastCoinUsed(int[] coins, int amount) {
       int leastNumberOfCoinForAmount = Integer.MAX_VALUE;
@@ -51,5 +51,5 @@ public class CoinChange {
       smallestCoinsForAmount[amount] = leastNumberOfCoinForAmount;
       return leastNumberOfCoinForAmount;
     }
-    }
+  }
 }
