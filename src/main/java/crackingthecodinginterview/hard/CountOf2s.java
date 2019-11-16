@@ -5,24 +5,40 @@ package crackingthecodinginterview.hard;
  */
 public class CountOf2s {
   public int countTwosFromZeroTo(int number) {
-    int powerOfTen = -1;
-    int totalNumberOfTwos = 0;
-    while (number > 0) {
-      int digit = number % 10;
-      if (powerOfTen >= 0) {
-        totalNumberOfTwos += Math.pow(10, powerOfTen) * digit;
+    int totalCount = 0;
+    int digitPlace = 1;
+
+    String numberString = Integer.toString(number);
+
+    int multiplier = 10;
+    int additionValue = 0;
+    while (number > multiplier) {
+      int additionMultiplier = multiplier / 10;
+      additionValue = (number / multiplier) * additionMultiplier;
+      totalCount += additionValue;
+      if (valueAtDigitPlaceIsMoreThan2(numberString, digitPlace)) {
+        totalCount += additionMultiplier;
       }
-      if (digit >= 2) {
-        if (powerOfTen >= 0) {
-          totalNumberOfTwos += 10;
-        } else {
-          totalNumberOfTwos += 1;
-        }
-      }
-      number /= 10;
-      powerOfTen++;
+      digitPlace++;
+      multiplier = (int) Math.pow(10, digitPlace);
     }
-    return totalNumberOfTwos;
+
+    multiplier = multiplier / 10;
+    int base2Number = 2 * multiplier;
+    int difference = number - (base2Number - 1);
+    if (difference > 0) {
+      additionValue = Math.min(multiplier, difference);
+      totalCount += additionValue;
+    }
+
+    return totalCount;
+  }
+
+  private boolean valueAtDigitPlaceIsMoreThan2(String numberString, int digitPlace) {
+    int examinePosition = numberString.length() - digitPlace;
+    char digitPlaceValueChar = numberString.charAt(examinePosition);
+    int digitPlaceValue = Integer.parseInt(Character.toString(digitPlaceValueChar));
+    return digitPlaceValue >= 2;
   }
 
   private int count2sInRangeAtDigit(int number, int d) {
