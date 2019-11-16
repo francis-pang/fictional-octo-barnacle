@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Partition {
-  public List partitionListBasedOnValue(List<Integer> linkedList, int value) {
+  public List<Integer> partitionListBasedOnValue(List<Integer> linkedList, int value) {
     LinkedList<Integer> resultLinkedList = new LinkedList<>();
     for (Object element : linkedList) {
       int elementValue = (int) element;

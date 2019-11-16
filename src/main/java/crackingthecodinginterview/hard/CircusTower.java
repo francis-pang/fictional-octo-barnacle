@@ -55,7 +55,7 @@ public class CircusTower {
     }
   }
 
-  static class Person implements Comparable {
+  static class Person implements Comparable<Person> {
     public int height;
     public int weight;
 
@@ -69,7 +69,7 @@ public class CircusTower {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Person o) {
       if (this == o) {
         return 0;
       }
@@ -78,7 +78,7 @@ public class CircusTower {
         return -1;
       }
 
-      Person that = (Person) o;
+      Person that = o;
       if (this.height == that.height &&
           this.weight == that.weight) {
         return 0;

@@ -41,7 +41,7 @@ public class ShortestSupersequence {
     return shortestSupersequenceRange;
   }
 
-  private Set convertArrayToSet(final int[] array) {
+  private Set<Integer> convertArrayToSet(final int[] array) {
     Set<Integer> convertedSet = new HashSet<>();
     for (int element : array) {
       convertedSet.add(element);

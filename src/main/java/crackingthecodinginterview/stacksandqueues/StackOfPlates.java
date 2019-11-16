@@ -18,14 +18,14 @@ public class StackOfPlates<E> {
     private int numberOfStackNodes;
 
     public StackOfPlates() {
-        root = new StackNode();
+      root = new StackNode<>();
         lastStack = root;
         numberOfStackNodes = 1;
     }
 
     public void push (E element) {
         if (lastStack.size == STACK_CAPACITY) { // Create new Stack
-            StackNode newStackNode = new StackNode();
+          StackNode<E> newStackNode = new StackNode<>();
             lastStack.next = newStackNode;
             newStackNode.next = newStackNode;
             newStackNode.previous = lastStack;
@@ -83,6 +83,5 @@ public class StackOfPlates<E> {
             size--;
             return super.pop();
         }
-
     }
 }
