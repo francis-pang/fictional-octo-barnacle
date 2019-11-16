@@ -15,8 +15,8 @@ class SumListsTest {
     sumLists = new SumLists();
   }
 
-  private List convertNumberToList(int number) {
-    LinkedList numberList = new LinkedList();
+  private List<Integer> convertNumberToList(int number) {
+    LinkedList<Integer> numberList = new LinkedList<>();
     while (number > 0) {
       numberList.add(number % 10);
       number /= 10;
@@ -35,44 +35,44 @@ class SumListsTest {
   @Test
   void addTwoSimpleNumber() {
     //11 + 11 = 22
-    List numberList = convertNumberToList(11);
-    List actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(numberList, numberList);
+    List<Integer> numberList = convertNumberToList(11);
+    List<Integer> actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(numberList, numberList);
     Assertions.assertEquals(22, convertNumberListToNumber(actualSummationList));
   }
 
   @Test
   void addSingleDigitNumber() {
-    List number1List = convertNumberToList(617);
-    List number2List = convertNumberToList(2);
+    List<Integer> number1List = convertNumberToList(617);
+    List<Integer> number2List = convertNumberToList(2);
 
-    List actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
+    List<Integer> actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
     Assertions.assertEquals(619, convertNumberListToNumber(actualSummationList));
   }
 
   @Test
   void addOverSpillingNumberAtThirdDigit() {
-    List number1List = convertNumberToList(8999);
-    List number2List = convertNumberToList(200);
+    List<Integer> number1List = convertNumberToList(8999);
+    List<Integer> number2List = convertNumberToList(200);
 
-    List actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
+    List<Integer> actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
     Assertions.assertEquals(9199, convertNumberListToNumber(actualSummationList));
   }
 
   @Test
   void addOverSpillingNumberAtFirstDigit() {
-    List number1List = convertNumberToList(9999);
-    List number2List = convertNumberToList(2);
+    List<Integer> number1List = convertNumberToList(9999);
+    List<Integer> number2List = convertNumberToList(2);
 
-    List actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
+    List<Integer> actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
     Assertions.assertEquals(10001, convertNumberListToNumber(actualSummationList));
   }
 
   @Test
   void addTwoNumberFromProvidedExamples() {
-    List number1List = convertNumberToList(617);
-    List number2List = convertNumberToList(295);
+    List<Integer> number1List = convertNumberToList(617);
+    List<Integer> number2List = convertNumberToList(295);
 
-    List actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
+    List<Integer> actualSummationList = sumLists.addTwoNumbersRepresentByLinkedLists(number1List, number2List);
     Assertions.assertEquals(912, convertNumberListToNumber(actualSummationList));
   }
 }

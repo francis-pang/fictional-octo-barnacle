@@ -8,7 +8,7 @@ public class MyQueue {
 
   /** Initialize your data structure here. */
   public MyQueue() {
-    inOrderedStack = new Stack();
+    inOrderedStack = new Stack<Integer>();
     prePopStack = new Stack<>();
   }
 

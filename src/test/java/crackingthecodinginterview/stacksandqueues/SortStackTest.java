@@ -68,8 +68,8 @@ class SortStackTest {
     }
   }
 
-  private Stack insertIntoStack(int[] array) {
-    Stack stack = new Stack();
+  private Stack<Integer> insertIntoStack(int[] array) {
+    Stack<Integer> stack = new Stack<>();
     for (int number : array) {
       stack.push(number);
     }
