@@ -82,4 +82,9 @@ class CountOf2sTest {
   void countTwosFromZeroTo_171() {
     assertEquals(countOf2s.count2sInRange(171), countOf2s.countTwosFromZeroTo(171));
   }
+
+  @Test
+  void countTwosFromZeroTo_122() {
+    assertEquals(countOf2s.count2sInRange(122), countOf2s.countTwosFromZeroTo(122));
+  }
 }
