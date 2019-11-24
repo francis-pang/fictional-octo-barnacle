@@ -2,111 +2,68 @@ package crackingthecodinginterview.treesandgraphs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 public class BstSequences {
-  public static List<List<BinaryTreeNode>> getAllPossibleInsertionSequences(BinaryTreeNode root) {
-    // Node on next level
-    List<List<BinaryTreeNode>> nodesByLevel = new ArrayList<>();
-    List<BinaryTreeNode> nodesOnNextLevel = new ArrayList<>();
-    nodesOnNextLevel.add(root);
-
-    // Building the list of node on each level
-    while (nodesOnNextLevel.size() > 0) {
-      List<BinaryTreeNode> nodesOnSameLevel = new ArrayList<>();
-      nodesOnSameLevel.addAll(nodesOnNextLevel);
-      nodesByLevel.add(nodesOnSameLevel);
-      nodesOnNextLevel.clear();
-      for (BinaryTreeNode node : nodesOnSameLevel) {
-        if (node.left != null) {
-          nodesOnNextLevel.add(node.left);
-        }
-        if (node.right != null) {
-          nodesOnNextLevel.add(node.right);
-        }
-      }
+  public List<int[]> computeAllBstSequences(Node root) {
+    if (root == null) {
+      return new ArrayList<>();
     }
-
-    if (nodesByLevel.size() == 1) {
-      return nodesByLevel;
-    } else {
-      List<List<BinaryTreeNode>> allPossibleSequences = new ArrayList<>();
-      for (List<BinaryTreeNode> currentLevelNodes : nodesByLevel) {
-        allPossibleSequences = mergeTwoBinaryNodeList(allPossibleSequences, processSameLayerNodes(currentLevelNodes,
-            currentLevelNodes.remove(0)));
-      }
-      return allPossibleSequences;
+    List<int[]> leftSubTreeCombination = computeAllBstSequences(root.left);
+    List<int[]> rightSubTreeCombination = computeAllBstSequences(root.right);
+    List<int[]> combinedList = new ArrayList<>();
+    int leftSubTreeSize = leftSubTreeCombination.size();
+    int rightSubTreeSize = rightSubTreeCombination.size();
+    if (leftSubTreeSize == 0 && rightSubTreeSize == 0) {
+      combinedList.add(merge(root.value, null, null));
+      return combinedList;
     }
+    if (leftSubTreeSize == 0) {
+      rightSubTreeCombination.forEach(rightPass -> combinedList.add(merge(root.value, rightPass)));
+    }
+    if (rightSubTreeSize == 0) {
+      leftSubTreeCombination.forEach(leftPass -> combinedList.add(merge(root.value, leftPass)));
+    }
+    leftSubTreeCombination.forEach(leftPass ->
+        rightSubTreeCombination.forEach(rightPass -> {
+          combinedList.add(merge(root.value, leftPass, rightPass));
+          combinedList.add(merge(root.value, rightPass, leftPass));
+        })
+    );
+    return combinedList;
   }
 
-  private static List<List<BinaryTreeNode>> mergeTwoBinaryNodeList(List<List<BinaryTreeNode>> preNodesList,
-                                                                   List<List<BinaryTreeNode>> postNodesList) {
-    if (preNodesList.size() == 0) {
-      return postNodesList;
+  private int[] merge(int value, int[] pass) {
+    int[] mergedArray = new int[1 + pass.length];
+    mergedArray[0] = value;
+    int index = 0;
+    for (int i = 0; i < pass.length; i++) {
+      index++;
+      mergedArray[index] = pass[i];
     }
-    List<List<BinaryTreeNode>> mergedList = new ArrayList<>();
-    for (List<BinaryTreeNode> preNodes : preNodesList) {
-      for (List<BinaryTreeNode> postNodes : postNodesList) {
-        List<BinaryTreeNode> combinedNodes = new ArrayList<>();
-        combinedNodes.addAll(preNodes);
-        combinedNodes.addAll(postNodes);
-        mergedList.add(combinedNodes);
-      }
-    }
-    return mergedList;
+    return mergedArray;
   }
 
-  private static List<List<BinaryTreeNode>> processSameLayerNodes(List<BinaryTreeNode> nodes, BinaryTreeNode node) {
-    if (nodes.size() == 0) {
-      List<BinaryTreeNode> singleNodeList = new ArrayList<>();
-      singleNodeList.add(node);
-      List<List<BinaryTreeNode>> singleList = new ArrayList<>();
-      singleList.add(singleNodeList);
-      return singleList;
+  private int[] merge(int value, int[] leftPass, int[] rightPass) {
+    if (leftPass == null && rightPass == null) {
+      return new int[]{value};
     }
-    List<List<BinaryTreeNode>> listOfCombinationsWithoutNewNode = processSameLayerNodes(nodes, nodes.remove(0));
-    List<List<BinaryTreeNode>> listOfCombinationsWithNewNode = new ArrayList<>();
-    for (List<BinaryTreeNode> allCombinationNodes : listOfCombinationsWithoutNewNode) {
-      for (int i = 0; i < listOfCombinationsWithoutNewNode.size(); i++) {
-        List<BinaryTreeNode> withoutNewNodes = new ArrayList<>();
-        withoutNewNodes.addAll(allCombinationNodes);
-        withoutNewNodes.add(i, node);
-        listOfCombinationsWithNewNode.add(withoutNewNodes);
-      }
-      // Last position
-      allCombinationNodes.add(node);
-      listOfCombinationsWithNewNode.add(allCombinationNodes);
+    int[] mergedArray = new int[1 + leftPass.length + rightPass.length];
+    mergedArray[0] = value;
+    int index = 0;
+    for (int i = 0; i < leftPass.length; i++) {
+      index++;
+      mergedArray[index] = leftPass[i];
     }
-    return listOfCombinationsWithNewNode;
+    for (int i = 0; i < rightPass.length; i++) {
+      index++;
+      mergedArray[index] = rightPass[i];
+    }
+    return mergedArray;
   }
 
-  public static class BinaryTreeNode {
+  public static class Node {
     public int value;
-    public BinaryTreeNode left;
-    public BinaryTreeNode right;
-
-    public BinaryTreeNode(int value) {
-      this.value = value;
-    }
-
-    @Override
-    public String toString() {
-      return new StringJoiner(", ", BinaryTreeNode.class.getSimpleName() + "[", "]")
-          .add("value=" + value)
-          .toString();
-    }
-  }
-
-  public static void main(String[] args) {
-    BinaryTreeNode n1 = new BinaryTreeNode(1);
-    BinaryTreeNode n2 = new BinaryTreeNode(2);
-    BinaryTreeNode n3 = new BinaryTreeNode(3);
-    BinaryTreeNode n4 = new BinaryTreeNode(4);
-
-    n3.left = n2;
-    n3.right = n4;
-    n2.left = n1;
-
-    System.out.println(getAllPossibleInsertionSequences(n2));
+    public Node left;
+    public Node right;
   }
 }
