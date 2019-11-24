@@ -22,7 +22,7 @@ public class CountOf2s {
     int baseMultiplier = 1;
     int digitPlaceMultiplier = baseMultiplier * 10;
     while (number > digitPlaceMultiplier) {
-      // For example 22 has
+      // For example 22 has 3 '2'
       int numberOfTwosForPreviousDigitPlace = (number / digitPlaceMultiplier) * baseMultiplier;
       totalCount += numberOfTwosForPreviousDigitPlace;
       int moreThanTwoAddition = checkAndAddIfMoreThanTwo(numberString, digitPlace);
@@ -33,10 +33,6 @@ public class CountOf2s {
     }
 
     if (number > 10) {
-      int lastDigitValue = valueAtDigitPlace(numberString, digitPlace - 1);
-      if (lastDigitValue == 2) {
-        return totalCount;
-      }
       int base2Number = 2 * baseMultiplier;
       int difference = number - (base2Number - 1);
       if (difference > 0) {
@@ -48,10 +44,16 @@ public class CountOf2s {
   }
 
   private int checkAndAddIfMoreThanTwo(String numberString, int digitPlace) {
+    if (digitPlace == numberString.length() - 1) {
+      return 0;
+    }
     int digitPlaceValue = valueAtDigitPlace(numberString, digitPlace);
     if (digitPlaceValue > 2) {
-      return (int) Math.pow(10, digitPlace - 1);
+      return (int) Math.pow(10, digitPlace);
     } else if (digitPlaceValue == 2) {
+      if (digitPlace == 0) {
+        return 1;
+      }
       int fullValue = valueFromDigitPlace(numberString, digitPlace);
       int diff = fullValue - (2 * (int) Math.pow(10, digitPlace) - 1);
       return diff;
