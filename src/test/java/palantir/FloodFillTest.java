@@ -56,4 +56,24 @@ class FloodFillTest {
         };
     assertArrayEquals(expected, floodFill.findHighPoint(question));
   }
+
+  @Test
+  void markFloodArea() {
+    int[][] expected = new int[][]
+        {
+            {0, 1, 1, 1, 1},
+            {1, 0, 1, 1, 1},
+            {1, 1, 1, 1, 0},
+            {0, 1, 1, 1, 1}
+        };
+
+    int[][] question = new int[][]
+        {
+            {7, 7, 4, 14, 5},
+            {6, 9, 8, 15, 13},
+            {0, 0, 3, 13, 13},
+            {1, 0, -4, 10, 9}
+        };
+    assertArrayEquals(expected, floodFill.markFloodArea(question, 1, 3));
+  }
 }
