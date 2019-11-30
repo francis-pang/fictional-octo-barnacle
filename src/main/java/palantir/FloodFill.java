@@ -135,6 +135,66 @@ public class FloodFill {
     }
   }
 
+  public int[][] findPlateau(int[][] elevationMap) {
+    if (elevationMap == null || elevationMap.length == 0) {
+      return new int[0][0];
+    }
+
+    int[][] answer = new int[elevationMap.length][elevationMap[0].length];
+    int maxRow = elevationMap.length - 1;
+    int maxColumn = elevationMap[0].length - 1;
+
+    for (int row = 0; row <= maxRow; row++) {
+      for (int column = 0; column <= maxColumn; column++) {
+        int cellValue = elevationMap[row][column];
+        // one row above
+        if (row > 0) {
+          // Check diagonally left above
+          if (column > 0 && !numberIsHigherOrEquals(cellValue, elevationMap, row - 1, column - 1)) {
+            continue;
+          }
+          // Check directly above
+          if (!numberIsHigherOrEquals(cellValue, elevationMap, row - 1, column)) {
+            continue;
+          }
+          // Check diagonally right above
+          if (column < maxColumn && !numberIsHigherOrEquals(cellValue, elevationMap, row - 1, column + 1)) {
+            continue;
+          }
+        }
+
+        // same level
+        // Check one cell left
+        if (column > 0 && !numberIsHigherOrEquals(cellValue, elevationMap, row, column - 1)) {
+          continue;
+        }
+        // Check one cell right
+        if (column < maxColumn && !numberIsHigherOrEquals(cellValue, elevationMap, row, column + 1)) {
+          continue;
+        }
+
+        // one row below
+        if (row < maxRow) {
+          // Check diagonally left below
+          if (column > 0 && !numberIsHigherOrEquals(cellValue, elevationMap, row + 1, column - 1)) {
+            continue;
+          }
+          // Check directly below
+          if (!numberIsHigherOrEquals(cellValue, elevationMap, row + 1, column)) {
+            continue;
+          }
+          // Check diagonally right below
+          if (column < maxColumn && !numberIsHigherOrEquals(cellValue, elevationMap, row + 1, column + 1)) {
+            continue;
+          }
+        }
+        // If the cell passed all the check by this point of time, we know that this is a high point
+        answer[row][column] = 1;
+      }
+    }
+    return answer;
+  }
+
   public class Coordinate {
     public int row;
     public int column;
@@ -157,6 +217,10 @@ public class FloodFill {
     public int hashCode() {
       return Objects.hash(row, column);
     }
+  }
+
+  private boolean numberIsHigherOrEquals(int number, int[][] array, int row, int column) {
+    return number >= array[row][column];
   }
 
   private boolean numberIsHigher(int first, int[][] array, int row, int column) {

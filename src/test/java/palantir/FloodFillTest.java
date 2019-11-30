@@ -61,19 +61,17 @@ class FloodFillTest {
   void markFloodArea() {
     int[][] expected = new int[][]
         {
-            {0, 1, 1, 1, 1},
-            {1, 0, 1, 1, 1},
-            {1, 1, 1, 1, 0},
-            {0, 1, 1, 1, 1}
+            {0, 0, 1, 0},
+            {1, 0, 0, 0},
+            {1, 0, 1, 1}
         };
 
     int[][] question = new int[][]
         {
-            {7, 7, 4, 14, 5},
-            {6, 9, 8, 15, 13},
-            {0, 0, 3, 13, 13},
-            {1, 0, -4, 10, 9}
+            {5, 3, 9, 4},
+            {12, 8, 7, 8},
+            {12, 8, 14, 14}
         };
-    assertArrayEquals(expected, floodFill.markFloodArea(question, 1, 3));
+    assertArrayEquals(expected, floodFill.findPlateau(question));
   }
 }
