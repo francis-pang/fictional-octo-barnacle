@@ -58,6 +58,50 @@ class FloodFillTest {
   }
 
   @Test
+  void findHighPoint_5x5Map() {
+    int[][] expected = new int[][]
+        {
+            {0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 0},
+            {0, 0, 0, 1, 0},
+            {0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0}
+        };
+
+    int[][] question = new int[][]
+        {
+            {1, 2, 1, 3, 4},
+            {1, 5, 2, 2, 2},
+            {4, 5, 1, 9, 7},
+            {3, 5, 1, 7, 3},
+            {4, 3, 1, 7, 3}
+        };
+    assertArrayEquals(expected, floodFill.findHighPoint(question));
+  }
+
+  @Test
+  void markLowerGround_5x5Map() {
+    int[][] expected = new int[][]
+        {
+            {0, 0, 2, 1, 1},
+            {0, 0, 2, 2, 2},
+            {0, 0, 2, 1, 1},
+            {0, 0, 1, 1, 1},
+            {0, 0, 1, 0, 1}
+        };
+
+    int[][] question = new int[][]
+        {
+            {1, 2, 1, 3, 4},
+            {1, 5, 2, 2, 2},
+            {4, 5, 1, 9, 7},
+            {3, 5, 3, 7, 6},
+            {4, 3, 1, 7, 3}
+        };
+    assertArrayEquals(expected, floodFill.findRiskScores(question));
+  }
+
+  @Test
   void markFloodArea() {
     int[][] expected = new int[][]
         {
@@ -72,6 +116,6 @@ class FloodFillTest {
             {12, 8, 7, 8},
             {12, 8, 14, 14}
         };
-    assertArrayEquals(expected, floodFill.findPlateau(question));
+    assertArrayEquals(expected, floodFill.findHighPoints(question));
   }
 }
