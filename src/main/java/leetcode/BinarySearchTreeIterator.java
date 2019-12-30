@@ -1,13 +1,12 @@
 package leetcode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BinarySearchTreeIterator {
   /**
    * Definition for a binary tree node.
    **/
-  public class TreeNode {
+  public static class TreeNode {
     int val;
     TreeNode left;
     TreeNode right;
@@ -17,28 +16,20 @@ public class BinarySearchTreeIterator {
     }
   }
 
-  class BSTIterator {
-    private TreeNode current;
-    private Map<TreeNode, TreeNode> parentMap;
+  static class BSTIterator {
+    private Stack<TreeNode> treeStack;
 
     public BSTIterator(TreeNode root) {
-      parentMap = new HashMap<>();
-      constructParentMap(root);
+      treeStack = new Stack<>();
+      if (root != null) {
+        pushLeftNodesToStack(root);
+      }
     }
 
-    private void constructParentMap(TreeNode node) {
-      if (node == null) {
-        return;
-      }
-      current = node;
+    private void pushLeftNodesToStack(TreeNode node) {
+      treeStack.add(node);
       if (node.left != null) {
-        current = node;
-        parentMap.put(node.left, node);
-        constructParentMap(node.left);
-      }
-      if (node.right != null) {
-        parentMap.put(node.right, node);
-        constructParentMap(node.right);
+        pushLeftNodesToStack(node.left);
       }
     }
 
@@ -46,45 +37,39 @@ public class BinarySearchTreeIterator {
      * @return the next smallest number
      */
     public int next() {
-      if (current == null) {
+      if (treeStack.isEmpty()) {
         return 0;
       }
-      int value = current.val;
-      current = getNext(current);
-      return value;
-    }
-
-    TreeNode getNext(TreeNode node) {
-      TreeNode parent = parentMap.get(node);
-      while (parent != null) {
-        if (parent.val > node.val) { // node is left child
-          return parent;
-        } else { // node is right child
-          parent = parentMap.get(parent);
-        }
+      TreeNode poppedNode = treeStack.pop();
+      if (poppedNode.right != null) {
+        pushLeftNodesToStack(poppedNode.right);
       }
-      // parent == null
-      if (node.right != null) {
-        return smallest(node.right);
-      } else {
-        return null;
-      }
-    }
-
-    TreeNode smallest(TreeNode node) {
-      if (node.left != null) {
-        return smallest(node.left);
-      } else {
-        return node;
-      }
+      return poppedNode.val;
     }
 
     /**
      * @return whether we have a next smallest number
      */
     public boolean hasNext() {
-      return current == null;
+      return !treeStack.isEmpty();
     }
+  }
+
+  public static void main(String[] args) {
+    TreeNode node7 = new TreeNode(7);
+    TreeNode node3 = new TreeNode(3);
+    TreeNode node15 = new TreeNode(15);
+    node7.left = node3;
+    node7.right = node15;
+
+    BSTIterator bstIterator = new BSTIterator(node7);
+    System.out.println("head has next: " + bstIterator.hasNext());
+    System.out.println("1st node: " + bstIterator.next());
+    System.out.println("1st node has next: " + bstIterator.hasNext());
+    System.out.println("2nd node: " + bstIterator.next());
+    System.out.println("2nd node has next: " + bstIterator.next());
+    System.out.println("3rd node: " + bstIterator.next());
+    System.out.println("3rd node has next: " + bstIterator.hasNext());
   }
 
 /**
