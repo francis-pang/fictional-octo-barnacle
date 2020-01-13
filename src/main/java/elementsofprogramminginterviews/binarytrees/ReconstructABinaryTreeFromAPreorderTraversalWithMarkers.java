@@ -49,7 +49,7 @@ public class ReconstructABinaryTreeFromAPreorderTraversalWithMarkers {
   }
 
   public static void main(String[] args) {
-    ReconstructABinaryTreeFromAPreorderTraversalWithMarkers reconstructABinaryTreeFromAPreorderTraversalWithMarkers = new reconstructABinaryTreeFromAPreorderTraversalWithMarkers();
+    ReconstructABinaryTreeFromAPreorderTraversalWithMarkers reconstructABinaryTreeFromAPreorderTraversalWithMarkers = new ReconstructABinaryTreeFromAPreorderTraversalWithMarkers();
     Character[] preOrder = new Character[]{'H', 'B', 'F', null, null, 'E', 'A', null, null, null, 'C', null, 'D', null, 'G', 'I', null, null, null};
     Node root = reconstructABinaryTreeFromAPreorderTraversalWithMarkers.reconstructTree(preOrder);
     System.out.println("Done");
