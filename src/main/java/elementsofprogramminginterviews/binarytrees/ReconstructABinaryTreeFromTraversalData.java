@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class ReconstructABinaryTreeFromTraversalData {
   public Node constructTree(char[] inOrder, char[] preOrder) {
     Map<Character, Integer> inOrderNodePositionTable = buildPositionTable(inOrder);
@@ -48,7 +51,7 @@ public class ReconstructABinaryTreeFromTraversalData {
   }
 
   public static void main(String[] args) {
-    CrlController crlController = new CrlController();
+    ReconstructABinaryTreeFromTraversalData reconstructABinaryTreeFromTraversalData = new ReconstructABinaryTreeFromTraversalData();
     char[] inOrder = new char[]{'B', 'A', 'C'};
     char[] preOrder = new char[]{'A', 'B', 'C'};
 
@@ -56,7 +59,7 @@ public class ReconstructABinaryTreeFromTraversalData {
     preOrder = new char[]{'A', 'B', 'D', 'F', 'C', 'E', 'G', 'H', 'I'};
     inOrder = new char[]{'B', 'A'};
     preOrder = new char[]{'A', 'B'};
-    Node root = crlController.constructTree(inOrder, preOrder);
+    Node root = reconstructABinaryTreeFromTraversalData.constructTree(inOrder, preOrder);
     System.out.println("Done");
   }
 }
