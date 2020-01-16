@@ -1,8 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.TreeMap;
-
 public class OnlineElection {
   class TopVotedCandidate {
     private NavigableMap<Integer, Integer> winnerAtTimes;
