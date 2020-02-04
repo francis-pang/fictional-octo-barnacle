@@ -108,7 +108,7 @@ public class DijkstraP {
     return path;
   }
 
-  public void printPath(List<Node> path) {
+  public static void printPath(List<Node> path) {
     for (Node node : path) {
       System.out.printf("%s,", node.value);
     }
@@ -203,9 +203,9 @@ public class DijkstraP {
 
     DijkstraP dijkstraP = new DijkstraP();
     List<Node> shortestDistancePath = dijkstraP.findSingleSourceShortestPath(graph, nodeA, nodeH);
-    dijkstraP.printPath(shortestDistancePath);
+    printPath(shortestDistancePath);
 
     shortestDistancePath = dijkstraP.findSingleSourceShortestPathWithoutGraph(nodeA, nodeH);
-    dijkstraP.printPath(shortestDistancePath);
+    printPath(shortestDistancePath);
   }
 }
