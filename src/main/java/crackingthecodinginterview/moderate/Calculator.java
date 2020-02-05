@@ -1,7 +1,5 @@
 package crackingthecodinginterview.moderate;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -9,105 +7,70 @@ import java.util.Stack;
  * the result.
  */
 public class Calculator {
-  short numberOfFirstOrderOperator = 0;
-  Stack<ArithmeticExpression> secondOrderStack = new Stack<>();
-  Queue<ArithmeticExpression> expressionQueue = new ArrayDeque<>();
-
-  public double calculate(String expression){
-    StringBuilder operand = new StringBuilder(); // Add a positive sign in front first
-    char previousOperator = ' ';
-    char expressionOperator = '+';
-    for (char character : expression.toCharArray()) {
-      if (character == ' ') {
-        continue;
-      } else if (Character.isDigit(character)) {
-        operand.append(character);
-      } else { // Must be one of the operator
-        evaluateOperator(expressionOperator, previousOperator, Integer.valueOf(operand.toString()));
-        // Reset the value
-        operand = new StringBuilder();
-        previousOperator = expressionOperator;
-        expressionOperator = character;
-      }
+  public double answer(String s) {
+    Stack<Double> stack = new Stack<>();
+    boolean negativeFirst = false;
+    Parsed p;
+    if (s.charAt(0) == '-') {
+      negativeFirst = true;
+      p = parseNumber(s, 1);
+    } else {
+      p = parseNumber(s, 0);
     }
-    if (secondOrderStack.empty() && expressionQueue.isEmpty()) {
-      return Integer.valueOf(operand.toString());
+    if (negativeFirst) {
+      stack.push(p.val * -1);
+    } else {
+      stack.push(p.val);
     }
-    // Last expression
-    evaluateOperator(expressionOperator, previousOperator, Integer.valueOf(operand.toString()));
-
-    // Clear the remaining stack
-    while (!secondOrderStack.empty()) {
-      expressionQueue.offer(secondOrderStack.pop());
-    }
-
-    // Evaluate the re-ordered expression
-    ArithmeticExpression firstArithmeticExpression = expressionQueue.poll();
-    double leftOperand = (firstArithmeticExpression.operator == '+') ? firstArithmeticExpression.value :
-        (firstArithmeticExpression.value * -1);
-    while(!expressionQueue.isEmpty()) {
-      ArithmeticExpression arithmeticExpression = expressionQueue.poll();
-      if ((arithmeticExpression.operator == '+' || arithmeticExpression.operator == '-') && numberOfFirstOrderOperator > 0) {
-        numberOfFirstOrderOperator--;
-        expressionQueue.offer(new ArithmeticExpression('+', leftOperand));
-        leftOperand = (arithmeticExpression.operator == '+') ? arithmeticExpression.value :
-            (arithmeticExpression.value * -1);
-      } else {
-        leftOperand = calculateSingleArithmeticOperation(leftOperand, arithmeticExpression.value,
-            arithmeticExpression.operator);
-      }
-    }
-    return leftOperand;
-  }
-
-  private void evaluateOperator(char expressionOperator, char previousOperator, int value) {
-    ArithmeticExpression arithmeticExpression = new ArithmeticExpression();
-    switch(expressionOperator) {
-      case '+':
-      case '-':
-        secondOrderStack.push(new ArithmeticExpression(expressionOperator, value));
-        break;
-      case '*':
-      case '/':
-        if (previousOperator == '+'
-            || previousOperator == '-') {
-          expressionQueue.offer(secondOrderStack.pop());
+    int pos = p.nextPos;
+    while (pos < s.length()) {
+      char op = s.charAt(pos);
+      p = parseNumber(s, pos + 1);
+      if (op == '*' || op == '/') {
+        double num = stack.pop();
+        if (op == '*') {
+          p.val = num * p.val;
+        } else {
+          p.val = num / p.val;
         }
-        arithmeticExpression.operator = expressionOperator;
-        arithmeticExpression.value = value;
-        expressionQueue.offer(new ArithmeticExpression(expressionOperator, value));
-        numberOfFirstOrderOperator++;
+      } else if (op == '-') {
+        p.val *= -1;
+      }
+      stack.push(p.val);
+      pos = p.nextPos;
+    }
+    double ans = 0;
+    while (!stack.isEmpty()) {
+      ans += stack.pop();
+    }
+    return ans;
+  }
+
+  private Parsed parseNumber(String s, int pos) {
+    double number = 0;
+    while (pos < s.length()) {
+      char c = s.charAt(pos);
+      if (!Character.isDigit(c)) {
         break;
-      default:
-        throw new IllegalArgumentException("Unknown operator " + expressionOperator); //Should not happened
+      }
+      number = (number * 10) + Character.digit(c, 10);
+      pos++;
+    }
+    return new Parsed(number, pos);
+  }
+
+  private class Parsed {
+    public double val;
+    public int nextPos;
+
+    public Parsed(double val, int nextPos) {
+      this.val = val;
+      this.nextPos = nextPos;
     }
   }
 
-  private double calculateSingleArithmeticOperation (double firstNumber, double secondNumber, char operator) {
-    switch(operator) {
-      case '+':
-        return firstNumber + secondNumber;
-      case '-':
-        return firstNumber - secondNumber;
-      case '*':
-        return firstNumber * secondNumber;
-      case '/':
-        return firstNumber / secondNumber;
-      default:
-        throw new IllegalArgumentException("Unknown operator " + operator); //Should not happened
-    }
-  }
-
-  protected class ArithmeticExpression {
-    public char operator;
-    public double value;
-
-    public ArithmeticExpression() {
-    }
-
-    public ArithmeticExpression(char operator, double value) {
-      this.operator = operator;
-      this.value = value;
-    }
+  public static void main(String[] args) {
+    Calculator calculator = new Calculator();
+    System.out.println(calculator.answer("-2*3+5/6*3+15"));
   }
 }
