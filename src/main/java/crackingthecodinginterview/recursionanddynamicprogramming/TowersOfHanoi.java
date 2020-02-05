@@ -1,54 +1,59 @@
 package crackingthecodinginterview.recursionanddynamicprogramming;
 
 import java.util.Stack;
-import java.util.StringJoiner;
 
 public class TowersOfHanoi {
-  private Stack<Disk> stack1;
-  private Stack<Disk> stack2;
-  private Stack<Disk> stack3;
-
-  public void setStacks(Stack<Disk> stack1, Stack<Disk> stack2, Stack<Disk> stack3) {
-    this.stack1 = stack1;
-    this.stack2 = stack2;
-    this.stack3 = stack3;
+  public void moveTowerOfHanoi(int n) {
+    Stack<Integer> stack1 = new Stack<>();
+    Stack<Integer> stack2 = new Stack<>();
+    Stack<Integer> stack3 = new Stack<>();
+    // Initialise tower 1
+    for (int i = n; i > 0; i--) {
+      stack1.push(i);
+    }
+    moveDisc(stack1, stack2, stack3, n);
+    printAllStacks(stack1, stack2, stack3);
   }
 
-  public void moveDisksFromFirstTowerToLast(Stack<Disk> stack1, Stack<Disk> stack2, Stack<Disk> stack3) {
-    // Exit case
-    if (stack1.size() == 0) {
+  private void moveDisc(Stack<Integer> stack1, Stack<Integer> stack2, Stack<Integer> stack3, int n) {
+    if (n == 1) {
+      stack3.push(stack1.pop());
       return;
     }
-
-    Stack<Disk> spareStack = new Stack<>();
-    // This is just the preparation step, shouldn't be count as the moving of the disk, so it 'effectively' doesn't
-    // violate the rule
-    while (stack1.size() > 1) {
-      spareStack.push(stack1.pop());
+    if (n == 2) {
+      stack2.push(stack1.pop());
+      stack3.push(stack1.pop());
+      stack3.push(stack2.pop());
+      return;
     }
-    Disk biggestDisk = stack1.pop();
-
-    while (!spareStack.isEmpty()) {
-      stack1.push(spareStack.pop());
-    }
-    moveDisksFromFirstTowerToLast(stack1, stack3, stack2);
-    stack3.push(biggestDisk);
-    moveDisksFromFirstTowerToLast(stack2, stack1, stack3);
+    moveDisc(stack1, stack3, stack2, n - 1);
+    stack3.push(stack1.pop());
+    moveDisc(stack2, stack1, stack3, n - 1);
   }
 
-  static class Disk {
-    public int size;
+  private void printAllStacks(Stack<Integer> stack1, Stack<Integer> stack2, Stack<Integer> stack3) {
+    System.out.printf("s1=");
+    printStack(stack1);
+    System.out.println();
 
-    public Disk(int size) {
-      this.size = size;
-    }
+    System.out.printf("s2=");
+    printStack(stack2);
+    System.out.println();
 
-    @Override
-    public String toString() {
-      return new StringJoiner(", ", Disk.class.getSimpleName() + "[", "]")
-          .add("size=" + size)
-          .toString();
+    System.out.printf("s3=");
+    printStack(stack3);
+    System.out.println();
+  }
+
+  private void printStack(Stack<Integer> s) {
+    while (!s.isEmpty()) {
+      System.out.printf("%s, ", s.pop());
     }
+  }
+
+  public static void main(String[] args) {
+    TowersOfHanoi towersOfHanoi = new TowersOfHanoi();
+    towersOfHanoi.moveTowerOfHanoi(7);
   }
 }
 
