@@ -1,5 +1,7 @@
 package elementsofprogramminginterviews.binarytrees;
 
+import java.util.ArrayList;
+
 public class ComputeTheRightSiblingTree {
   public void addNextSibling(Node root) {
       ArrayList<Node> siblings = new ArrayList<>();
