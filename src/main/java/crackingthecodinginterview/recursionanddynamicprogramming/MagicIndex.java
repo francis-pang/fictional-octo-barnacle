@@ -1,8 +1,5 @@
 package crackingthecodinginterview.recursionanddynamicprogramming;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * A magic index in an array A [e ... n -1] is defined to be an index such that A[ i] =
  * i. Given a sorted array of distinct integers, write a method to find a magic index, if one exists, in
@@ -11,32 +8,29 @@ import java.util.Set;
  * What if the values are not distinct?
  */
 public class MagicIndex {
-  public int locateMagicIndex(int[] array) {
-    // Retrieve Integer.MIN_VALUE if there is no magic index
-    return locateMagicIndex(array, new HashSet<>(), 0, array.length - 1);
+  public int findAMagicIndex(int[] array) {
+    int left = 0;
+    int right = array.length - 1;
+    return findAMagicIndex(array, left, right);
   }
 
-  private int locateMagicIndex(int[] array, Set<Integer> processedIndexes, int leftBound, int rightBound) {
-    // Since we know that the array is sorted and distinct. By comparing the index with the value at the index, we
-    // know to move upward or downwards.
-    int midPoint = (leftBound + (rightBound + 1)) / 2;
-
-    if (processedIndexes.contains(midPoint)) {
-      return Integer.MIN_VALUE;
+  private int findAMagicIndex(int[] array, int left, int right) {
+    if (right < left) {
+      return -1;
     }
-
-    if (midPoint == array[midPoint]) {
-      return midPoint;
-    } else if (midPoint < array[midPoint]) { // smaller
-      processedIndexes.add(midPoint);
-      return locateMagicIndex(array, processedIndexes, leftBound, midPoint);
-    } else { // bigger
-      processedIndexes.add(midPoint);
-      return locateMagicIndex(array, processedIndexes, midPoint, rightBound);
+    int mid = left + ((right - left) / 2);
+    if (array[mid] == mid) {
+      return mid;
     }
+    int index = findAMagicIndex(array, left, mid - 1);
+    if (index == -1) {
+      index = findAMagicIndex(array, mid + 1, right);
+    }
+    return index;
   }
 
-  public int locateMagicIndexAllowDuplicate(int[] array) {
-    return locateMagicIndex(array, new HashSet<>(), 0, array.length - 1);
+  public static void main(String[] args) {
+    MagicIndex magicIndex = new MagicIndex();
+    System.out.println(magicIndex.findAMagicIndex(new int[]{-10, -5, 1, 2, 2, 3, 4, 8, 9, 12, 13}));
   }
 }
