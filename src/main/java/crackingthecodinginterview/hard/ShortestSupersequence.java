@@ -1,83 +1,110 @@
 package crackingthecodinginterview.hard;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
 
 public class ShortestSupersequence {
-  private static final int RANGE_NOT_FOUND = -1;
-
-  public SuperSequenceRange getShortestSupersequence(int[] shortArray, int[] longArray) {
-    if (shortArray == null || longArray == null) {
-      return new SuperSequenceRange(RANGE_NOT_FOUND, RANGE_NOT_FOUND);
+  public int[] findShortestSuperSequence(int[] shortArray, int[] longArray) {
+    Map<Integer, Integer> shortArrayTable = new HashMap<>();
+    int missingElementCount = shortArray.length;
+    for (int e : shortArray) {
+      shortArrayTable.put(e, -1);
     }
-    Set<Integer> shortSet = convertArrayToSet(shortArray);
-    HashMap<Integer, Integer> locationsOfShortArray = new HashMap<>();
-    SuperSequenceRange shortestSupersequenceRange = new SuperSequenceRange(RANGE_NOT_FOUND, RANGE_NOT_FOUND);
-    int shortestDistance = Integer.MAX_VALUE;
 
-    for (int index = 0; index < longArray.length; index++) {
-      if (!shortSet.contains(longArray[index])) {
+    int position;
+    for (position = 0; position < longArray.length && missingElementCount > 0; position++) {
+      int element = longArray[position];
+      if (shortArrayTable.containsKey(element)) {
+        int lastFoundPosition = shortArrayTable.get(element);
+        shortArrayTable.put(element, position);
+        if (lastFoundPosition == -1) {
+          missingElementCount--;
+        }
+      }
+    }
+    if (missingElementCount > 0) { // Means there ins't such a super sequence
+      return null;
+    }
+    NumberDistance start = new NumberDistance(0, 0);
+    NumberDistance end = new NumberDistance(0, 0);
+    updateStartEnd(shortArrayTable, start, end);
+    int shortestDistanceEndPosition = end.position;
+    int shortestDistanceStartPosition = start.position;
+    int shortestDistance = calculateDistance(start.position, end.position);
+
+    for (; position < longArray.length; position++) {
+      if (!shortArrayTable.containsKey(longArray[position])) {
         continue;
       }
-      locationsOfShortArray.put(longArray[index], index);
-      if (locationsOfShortArray.size() < shortSet.size()) {
-        continue;
-      }
-      int maximum = Collections.max(locationsOfShortArray.values());
-      int minimum = Collections.min(locationsOfShortArray.values());
-      int distance = maximum - minimum;
-      if (distance == 0) { // This can only happen when the short array only has 1 element
-        return new SuperSequenceRange(index, index);
-      }
-      if (distance < shortestDistance) {
-        shortestDistance = distance;
-        shortestSupersequenceRange = new SuperSequenceRange(minimum, maximum);
+      int number = longArray[position];
+      shortArrayTable.put(number, position);
+      if (number == start.number || number == end.number) {
+        updateStartEnd(shortArrayTable, start, end);
+        int distance = calculateDistance(start.position, end.position);
+        if (distance < shortestDistance) {
+          shortestDistanceEndPosition = end.position;
+          shortestDistanceStartPosition = start.position;
+          shortestDistance = distance;
+        }
       }
     }
-    return shortestSupersequenceRange;
+    return new int[]{shortestDistanceStartPosition, shortestDistanceEndPosition};
   }
 
-  private Set<Integer> convertArrayToSet(final int[] array) {
-    Set<Integer> convertedSet = new HashSet<>();
-    for (int element : array) {
-      convertedSet.add(element);
-    }
-    return convertedSet;
+  private int calculateDistance(int start, int end) {
+    return end - start + 1;
   }
 
-  public static class SuperSequenceRange {
-    public int left;
-    public int right;
+  private void updateStartEnd(Map<Integer, Integer> shortArrayTable, NumberDistance start, NumberDistance end) {
+    NumberDistance smallest = new NumberDistance(Integer.MIN_VALUE, Integer.MAX_VALUE);
+    NumberDistance biggest = new NumberDistance(Integer.MIN_VALUE, Integer.MIN_VALUE);
+    for (Map.Entry<Integer, Integer> entry : shortArrayTable.entrySet()) {
+      int entryNumber = entry.getKey();
+      int entryPosition = entry.getValue();
+      if (smallest.position > entryPosition) {
+        smallest.number = entryNumber;
+        smallest.position = entryPosition;
+      }
+      if (biggest.position < entryPosition) {
+        biggest.number = entryNumber;
+        biggest.position = entryPosition;
+      }
+    }
+    start.clone(smallest);
+    end.clone(biggest);
+  }
 
-    public SuperSequenceRange(int left, int right) {
-      this.left = left;
-      this.right = right;
+  class NumberDistance implements Comparable<NumberDistance> {
+    public int number;
+    public int position;
+
+    public NumberDistance(int number, int position) {
+      this.number = number;
+      this.position = position;
     }
 
     @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof SuperSequenceRange)) return false;
-      SuperSequenceRange that = (SuperSequenceRange) o;
-      return left == that.left &&
-          right == that.right;
+    public int compareTo(NumberDistance o) {
+      return this.position - o.position;
     }
 
-    @Override
-    public int hashCode() {
-      return Objects.hash(left, right);
+    public void clone(NumberDistance numberDistance) {
+      this.position = numberDistance.position;
+      this.number = numberDistance.number;
     }
+  }
 
-    @Override
-    public String toString() {
-      return new StringJoiner(", ", SuperSequenceRange.class.getSimpleName() + "[", "]")
-          .add("left=" + left)
-          .add("right=" + right)
-          .toString();
-    }
+  public static void main(String[] args) {
+    int[] shortArray = new int[]{1, 5, 9, 7};
+    int[] longArray = new int[]{7, 5, 9, 0, 2, 1, 3, 5, 7, 9, 1, 1, 5, 8, 8, 9, 7};
+    ShortestSupersequence shortestSupersequence = new ShortestSupersequence();
+    int[] result = shortestSupersequence.findShortestSuperSequence(shortArray, longArray);
+    System.out.println(result[0] + "," + result[1]);
   }
 }
