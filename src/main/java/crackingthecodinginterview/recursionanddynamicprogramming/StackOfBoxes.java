@@ -1,107 +1,87 @@
 package crackingthecodinginterview.recursionanddynamicprogramming;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.PriorityQueue;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StackOfBoxes {
-  public int heightOfStack(Box[] boxes) {
-    // Sort the boxes first
-    PriorityQueue<Box> sortedBoxesByVolume = new PriorityQueue<>();
-    for (Box box : boxes) {
-      sortedBoxesByVolume.add(box);
-    }
-    return maxHeightOfStack(sortedBoxesByVolume.poll(), sortedBoxesByVolume);
+  public int maxHeightOfStackedBoxes(int[] heights, int[] widths, int[] depths) {
+    ArrayList<Box> boxes = constructBox(heights, widths, depths);
+    Map<Integer, Integer> memoTable = new HashMap<>();
+    Box infinityBigBox = new Box(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    return maxHeightOfStackedBoxes(boxes, memoTable, 0, infinityBigBox);
   }
 
-  private int maxHeightOfStack(Box currentBox, PriorityQueue<Box> sortedBoxesByVolume) {
-    if (currentBox == null) {
+  private int maxHeightOfStackedBoxes(ArrayList<Box> boxes, Map<Integer, Integer> memoTable, int index,
+                                      Box boxLimitation) {
+    if (memoTable.containsKey(index)) {
+      return memoTable.get(index);
+    }
+    int maxHeight = boxes.get(boxes.size() - 1).height;
+    if (index == boxes.size() - 1) {
+      memoTable.put(index, maxHeight);
+      return boxes.get(boxes.size() - 1).height;
+    }
+    int iteratingIndex = index;
+    while (iteratingIndex < boxes.size()) {
+      Box box = boxes.get(iteratingIndex);
+      if (box.isSmaller(boxLimitation)) {
+        break;
+      }
+      iteratingIndex++;
+    }
+    if (iteratingIndex == boxes.size()) {
       return 0;
     }
-    if (sortedBoxesByVolume.isEmpty()) {
-      return currentBox.height;
-    }
-    List<Box> sameVolumeBoxes = new ArrayList<>();
-    Box firstBox = sortedBoxesByVolume.poll();
-    sameVolumeBoxes.add(firstBox);
-    while (sortedBoxesByVolume.peek() != null &&
-        firstBox.calculateVolume() == sortedBoxesByVolume.peek().calculateVolume()) {
-      sameVolumeBoxes.add(sortedBoxesByVolume.poll());
-    }
-    int maxHeight = 0;
-    for (Box box : sameVolumeBoxes) {
-      int height;
-      if (box.isBiggerThan(currentBox)) {
-        height = currentBox.height + maxHeightOfStack(box, sortedBoxesByVolume);
-      } else {
-        height = maxHeightOfStack(currentBox, sortedBoxesByVolume);
-      }
-      if (height > maxHeight) {
-        maxHeight = height;
-      }
-    }
-    sortedBoxesByVolume.addAll(sameVolumeBoxes);
-    return maxHeight;
+    int maxWithThisBox = boxes.get(iteratingIndex).height + maxHeightOfStackedBoxes(boxes, memoTable,
+        iteratingIndex + 1, boxes.get(iteratingIndex));
+    int maxSkippingThisBox = maxHeightOfStackedBoxes(boxes, memoTable, iteratingIndex + 1, boxLimitation);
+    int max = Math.max(maxWithThisBox, maxSkippingThisBox);
+    memoTable.put(index, max);
+    return max;
   }
 
-  static class Box implements Comparator<Box>, Comparable<Box> {
-    private int width;
-    private int height;
-    private int depth;
+  private ArrayList<Box> constructBox(int[] heights, int[] widths, int[] depths) {
+    ArrayList<Box> sortedBoxes = new ArrayList<>();
+    for (int i = 0; i < heights.length; i++) {
+      sortedBoxes.add(new Box(heights[i], widths[i], depths[i]));
+    }
+    Collections.sort(sortedBoxes);
+    return sortedBoxes;
+  }
 
-    public Box(int width, int height, int depth) {
-      this.width = width;
+  class Box implements Comparable<Box> {
+    public int height;
+    public int width;
+    public int depth;
+
+    public Box(int height, int width, int depth) {
       this.height = height;
+      this.width = width;
       this.depth = depth;
     }
 
-    public boolean isBiggerThan(Box otherBox) {
-      return (this.depth > otherBox.depth
-          && this.height > otherBox.height
-          && this.width > otherBox.width);
-    }
-
-    public int calculateVolume() {
-      return width * height * depth;
-    }
-
-    @Override
-    public int compare(Box o1, Box o2) {
-      if (o1.calculateVolume() == o2.calculateVolume()) {
-        return 0;
-      } else if (o1.calculateVolume() < o2.calculateVolume()) {
-        return 1;
-      } else {
-        return -1;
-      }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (!(o instanceof Box)) return false;
-      Box box = (Box) o;
-      return width == box.width &&
-          height == box.height &&
-          depth == box.depth;
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(width, height, depth);
+    public boolean isSmaller(Box bigger) {
+      return (this.height < bigger.height && depth < bigger.depth && width < bigger.width);
     }
 
     @Override
     public int compareTo(Box o) {
-      if (calculateVolume() == o.calculateVolume()) {
-        return 0;
-      } else if (calculateVolume() > o.calculateVolume()) {
-        return 1;
-      } else {
-        return -1;
+      if (this.height != o.height) {
+        return this.height - o.height;
       }
+      if (this.width != o.width) {
+        return this.width - o.width;
+      }
+      if (this.depth != o.depth) {
+        return this.depth - o.depth;
+      }
+      return 0;
     }
+  }
+
+  public static void main(String[] args) {
+
   }
 }
