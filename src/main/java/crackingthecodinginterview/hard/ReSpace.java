@@ -1,6 +1,9 @@
 package crackingthecodinginterview.hard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Oh, no! You have accidentally removed all spaces, punctuation, and capitalization in a lengthy document. A
@@ -13,79 +16,85 @@ import java.util.*;
  * Output: jess looked just like tim her brother (7 unrecognized characters)
  */
 public class ReSpace {
-  private TriesNode root;
-
-  public String unconcatenate(List<String> dictionary, String document) {
-    populateTries(dictionary);
-
-    return putSpaceToDocument(document);
+  public int minimumUnrecognisedCharacters(String s, List<String> dictionary) {
+    TrieNode trieRoot = constructTrieTree(dictionary);
+    Map<Range, Integer> memoTable = new HashMap<>();
+    return findMinimumUnrecognisedCharacters(s, new Range(0, s.length() - 1), trieRoot, memoTable);
   }
 
-  private String putSpaceToDocument(String document) {
-    char[] documentArray = document.toCharArray();
-    StringJoiner answerStringJoiner = new StringJoiner(" ");
-
-    int index = 0;
-    String unrecognisedWord = "";
-    while (index < documentArray.length) {
-      int endIndex = locateWordFromDictionary(documentArray, index, root);
-      if (endIndex == -1) { // Not such word
-        unrecognisedWord = unrecognisedWord + documentArray[index];
-        index++;
-      } else {
-        if (unrecognisedWord.length() >= 0) {
-          answerStringJoiner.add(unrecognisedWord);
-        }
-        answerStringJoiner.add(Arrays.copyOfRange(documentArray, index, endIndex).toString());
-        index = endIndex + 1;
-      }
-    }
-    if (unrecognisedWord.length() >= 0) {
-      answerStringJoiner.add(unrecognisedWord);
-    }
-    return answerStringJoiner.toString();
-  }
-
-  private int locateWordFromDictionary(char[] documentArray, int index, TriesNode triesNode) {
-    if (triesNode.children.containsKey(documentArray[index])) {
-      return locateWordFromDictionary(documentArray, index + 1,
-          triesNode.children.get(documentArray[index]));
-    } else {
-      if (triesNode.isCompleteWord) {
-        return index;
-      } else {
-        return -1;
-      }
-    }
-  }
-
-  private void populateTries(List<String> dictionary) {
-    root = new TriesNode();
+  private TrieNode constructTrieTree(List<String> dictionary) {
+    TrieNode root = new TrieNode();
     for (String word : dictionary) {
-      TriesNode triesNode = root;
-      for (Character character : word.toCharArray()) {
-        if (triesNode.children.containsKey(character)) {
-          triesNode = triesNode.children.get(character);
-        } else {
-          TriesNode newTriesNode = new TriesNode();
-          triesNode.children.put(character, newTriesNode);
-          triesNode = newTriesNode;
-        }
+      TrieNode node = root;
+      for (int i = 0; i < word.length(); i++) {
+        char c = word.charAt(i);
+        node = node.children.compute(c, (k, v) -> v == null ? new TrieNode() : v);
       }
-      triesNode.isCompleteWord = true;
+      node.isAWord = true;
+    }
+    return root;
+  }
+
+  private int findMinimumUnrecognisedCharacters(String s,
+                                                Range range,
+                                                TrieNode root,
+                                                Map<Range, Integer> memoTable) {
+    if (memoTable.containsKey(range)) {
+      return memoTable.get(range);
+    }
+    if (range.left >= s.length() - 1 || range.right < 0) {
+      return 0;
+    }
+    int minimumLength = range.right - range.left + 1;
+
+    for (int i = range.left; i <= range.right; i++) {
+      int iteratorIndex = i;
+      TrieNode node = root;
+      while (iteratorIndex <= range.right && node != null) {
+        char c = s.charAt(iteratorIndex);
+        node = node.children.get(c);
+        if (node != null && node.isAWord) {
+          int length = findMinimumUnrecognisedCharacters(s, new Range(range.left, i - 1), root, memoTable) +
+              findMinimumUnrecognisedCharacters(s, new Range(iteratorIndex + 1, range.right), root, memoTable);
+          if (length < minimumLength) {
+            minimumLength = length;
+          }
+        }
+        iteratorIndex++;
+      }
+    }
+    memoTable.put(range, minimumLength);
+    return minimumLength;
+  }
+
+  class Range {
+    public int left;
+    public int right;
+
+    public Range(int left, int right) {
+      this.left = left;
+      this.right = right;
     }
   }
 
-  public class TriesNode {
-    Map<Character, TriesNode> children;
-    boolean isCompleteWord;
+  class TrieNode {
+    public boolean isAWord;
+    public Map<Character, TrieNode> children;
 
-    public TriesNode() {
-    }
-
-    public TriesNode(char value, boolean isCompleteWord) {
-      this.isCompleteWord = isCompleteWord;
+    public TrieNode() {
       children = new HashMap<>();
+      isAWord = false;
     }
+  }
+
+  public static void main(String[] args) {
+    List<String> dictionary = new ArrayList<>();
+    dictionary.add("i");
+    dictionary.add("the");
+    dictionary.add("computer");
+    dictionary.add("compute");
+    dictionary.add("he");
+    ReSpace respace = new ReSpace();
+    System.out.println(respace.minimumUnrecognisedCharacters("iresetthecomputer", dictionary));
   }
 }
