@@ -6,31 +6,7 @@ package crackingthecodinginterview.recursionanddynamicprogramming;
  * array A.
  * FOLLOW UP
  * What if the values are not distinct?
+ * Answer is in {@link leetcode.FixedPoint}
  */
 public class MagicIndex {
-  public int findAMagicIndex(int[] array) {
-    int left = 0;
-    int right = array.length - 1;
-    return findAMagicIndex(array, left, right);
-  }
-
-  private int findAMagicIndex(int[] array, int left, int right) {
-    if (right < left) {
-      return -1;
-    }
-    int mid = left + ((right - left) / 2);
-    if (array[mid] == mid) {
-      return mid;
-    }
-    int index = findAMagicIndex(array, left, mid - 1);
-    if (index == -1) {
-      index = findAMagicIndex(array, mid + 1, right);
-    }
-    return index;
-  }
-
-  public static void main(String[] args) {
-    MagicIndex magicIndex = new MagicIndex();
-    System.out.println(magicIndex.findAMagicIndex(new int[]{-10, -5, 1, 2, 2, 3, 4, 8, 9, 12, 13}));
-  }
 }
