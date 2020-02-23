@@ -97,7 +97,7 @@ public class BidirectionalBfs {
     System.out.println();
   }
 
-  static class Node {
+  public static class Node {
     public char val;
     public Set<Node> neighbours;
 

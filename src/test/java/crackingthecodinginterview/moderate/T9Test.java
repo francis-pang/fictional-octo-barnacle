@@ -3,8 +3,8 @@ package crackingthecodinginterview.moderate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,13 +18,13 @@ class T9Test {
 
   @Test
   void getMatchingWordsFromDigits_sample1() {
-    Set<String> wordList = new HashSet<>();
+    List<String> wordList = new ArrayList<>();
     wordList.add("tree");
     wordList.add("rubb");
     wordList.add("used");
     wordList.add("empty");
 
-    assertThat(t9.getMatchingWordsFromDigits("8733", wordList))
+    assertThat(t9.getPossibleWords(wordList, 8733))
         .containsExactlyInAnyOrder("tree", "used");
   }
 }
