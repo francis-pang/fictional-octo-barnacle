@@ -1,4 +1,4 @@
-package other;
+package other.algorithm;
 
 public class BinarySearch {
   private static final int NUMBER_NOT_FOUND = -1;

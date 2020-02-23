@@ -1,4 +1,4 @@
-package other;
+package other.algorithm;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,8 +8,11 @@ import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.stream.IntStream;
 
-public class Dijkstra {
+public class BellmanFord {
+  private static int UNDEFINED_DISTANCE = -1;
+
   public void findShortestPath(Graph graph, Node start) {
     // Initialise graph
     PriorityQueue<Node> queue = new PriorityQueue<>();
@@ -26,16 +29,28 @@ public class Dijkstra {
     }
 
     // Select node
-    while (!queue.isEmpty()) {
-      Node node = queue.poll();
-      for (Edge edge : node.outgoingEdges) {
-        // Do relaxation
-        relaxation(node, edge, predecessorMap);
-      }
-    }
+    IntStream
+        .range(1, graph.nodes.size())
+        .forEach($ -> graph.nodes.forEach(node -> node.outgoingEdges.forEach(edgeNode -> {
+          // Do relaxation
+          relaxation(node, edgeNode, predecessorMap);
+        })));
+
+    // Double check
+    checkForNegativeCycle(graph, predecessorMap);
 
     // return shortest path
     printShortestPath(graph, start, predecessorMap);
+  }
+
+  private void checkForNegativeCycle(Graph graph, Map<Node, Node> predecessorMap) {
+    graph.nodes.forEach(node -> node.outgoingEdges.forEach(edge -> {
+      Node outNode = edge.destination;
+      if (outNode.distanceToSource > (node.distanceToSource + edge.weight)) {
+        outNode.distanceToSource = UNDEFINED_DISTANCE;
+        predecessorMap.put(outNode, null);
+      }
+    }));
   }
 
   private void printShortestPath(Graph graph, Node start, Map<Node, Node> predecessorMap) {
@@ -43,6 +58,10 @@ public class Dijkstra {
       int shortestDistance = node.distanceToSource;
       if (shortestDistance == Integer.MAX_VALUE) {
         System.out.printf("There is no shortest path from %c to %c.\n", node.label, start.label);
+        continue;
+      }
+      if (shortestDistance == UNDEFINED_DISTANCE) {
+        System.out.printf("There is a negative cycle from %c to %c.\n", node.label, start.label);
         continue;
       }
       if (node.equals(start)) {
@@ -67,8 +86,9 @@ public class Dijkstra {
 
   private void relaxation(Node node, Edge edge, Map<Node, Node> predecessorMap) {
     Node outNode = edge.destination;
-    if (outNode.distanceToSource > (node.distanceToSource + edge.weight)) {
-      outNode.distanceToSource = node.distanceToSource + edge.weight;
+    long checkingDistance = (long) node.distanceToSource + (long) edge.weight;
+    if (outNode.distanceToSource > checkingDistance) {
+      outNode.distanceToSource = (int) checkingDistance;
       predecessorMap.put(outNode, node);
     }
   }

@@ -1,4 +1,4 @@
-package other;
+package other.algorithm;
 
 public class Heap {
   public static void heapSort(int[] array) {

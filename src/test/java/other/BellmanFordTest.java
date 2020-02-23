@@ -1,12 +1,13 @@
 package other;
 
 import org.junit.jupiter.api.Test;
+import other.algorithm.BellmanFord;
 
 import java.util.ArrayList;
 
-import static other.BellmanFord.Edge;
-import static other.BellmanFord.Graph;
-import static other.BellmanFord.Node;
+import static other.algorithm.BellmanFord.Edge;
+import static other.algorithm.BellmanFord.Graph;
+import static other.algorithm.BellmanFord.Node;
 
 class BellmanFordTest {
 

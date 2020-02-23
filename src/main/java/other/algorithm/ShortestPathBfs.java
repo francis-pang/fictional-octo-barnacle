@@ -1,4 +1,4 @@
-package other;
+package other.algorithm;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
