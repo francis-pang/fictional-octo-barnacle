@@ -1,11 +1,12 @@
 package other;
 
 import org.junit.jupiter.api.Test;
+import other.algorithm.Dijkstra;
 
 import java.util.ArrayList;
 
-import static other.Dijkstra.Edge;
-import static other.Dijkstra.Node;
+import static other.algorithm.Dijkstra.Edge;
+import static other.algorithm.Dijkstra.Node;
 
 class DijkstraTest {
 

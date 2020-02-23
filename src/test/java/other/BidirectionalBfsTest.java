@@ -1,12 +1,13 @@
 package other;
 
 import org.junit.jupiter.api.Test;
+import other.algorithm.BidirectionalBfs;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static other.BidirectionalBfs.Graph;
-import static other.BidirectionalBfs.Node;
+import static other.algorithm.BidirectionalBfs.Graph;
+import static other.algorithm.BidirectionalBfs.Node;
 
 class BidirectionalBfsTest {
 

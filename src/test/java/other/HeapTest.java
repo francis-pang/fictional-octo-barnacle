@@ -1,6 +1,7 @@
 package other;
 
 import org.junit.jupiter.api.Test;
+import other.algorithm.Heap;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
