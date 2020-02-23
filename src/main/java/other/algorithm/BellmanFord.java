@@ -93,7 +93,7 @@ public class BellmanFord {
     }
   }
 
-  static class Graph {
+  public static class Graph {
     public Set<Node> nodes;
 
     public Graph() {
@@ -101,7 +101,7 @@ public class BellmanFord {
     }
   }
 
-  static class Node implements Comparable<Node> {
+  public static class Node implements Comparable<Node> {
     public char label;
     public List<Edge> outgoingEdges;
     public int distanceToSource;
@@ -131,7 +131,7 @@ public class BellmanFord {
     }
   }
 
-  static class Edge {
+  public static class Edge {
     public int weight;
     public Node destination;
 
