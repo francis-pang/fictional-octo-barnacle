@@ -1,11 +1,12 @@
 package other;
 
 import org.junit.jupiter.api.Test;
+import other.algorithm.ShortestPathBfs;
 
 import java.util.ArrayList;
 
-import static other.ShortestPathBfs.Graph;
-import static other.ShortestPathBfs.Node;
+import static other.algorithm.ShortestPathBfs.Graph;
+import static other.algorithm.ShortestPathBfs.Node;
 
 class ShortestPathBfsTest {
 

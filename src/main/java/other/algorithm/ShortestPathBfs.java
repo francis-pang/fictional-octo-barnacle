@@ -1,4 +1,4 @@
-package other;
+package other.algorithm;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
@@ -81,7 +81,7 @@ public class ShortestPathBfs {
     }
   }
 
-  static class Graph {
+  public static class Graph {
     public Set<Node> nodes;
 
     public Graph() {
@@ -89,7 +89,7 @@ public class ShortestPathBfs {
     }
   }
 
-  static class Node {
+  public static class Node {
     public char label;
     public List<Node> outgoingEdges;
 

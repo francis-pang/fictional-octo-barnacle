@@ -1,88 +1,68 @@
 package other;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
+import other.algorithm.BidirectionalBfs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static other.BidirectionalBfs.Graph;
-import static other.BidirectionalBfs.Node;
+import static other.algorithm.BidirectionalBfs.Node;
 
 class BidirectionalBfsTest {
 
   @Test
   void distanceBetweenTwoNode() {
-    Graph graph = new Graph();
+    Node nodeA = new Node('a');
+    Node nodeB = new Node('b');
+    Node nodeC = new Node('c');
+    Node nodeD = new Node('d');
+    Node nodeE = new Node('e');
+    Node nodeF = new Node('f');
+    Node nodeG = new Node('g');
+    Node nodeH = new Node('h');
+    Node nodeI = new Node('i');
+    Node nodeJ = new Node('j');
+    Node nodeK = new Node('k');
+    Node nodeL = new Node('l');
+    Node nodeM = new Node('m');
+    Node nodeN = new Node('n');
+    Node nodeO = new Node('o');
 
-    Node node0 = new Node(00, new ArrayList<>());
-    Node node1 = new Node(01, new ArrayList<>());
-    Node node2 = new Node(02, new ArrayList<>());
-    Node node3 = new Node(03, new ArrayList<>());
-    Node node4 = new Node(04, new ArrayList<>());
-    Node node5 = new Node(05, new ArrayList<>());
-    Node node6 = new Node(06, new ArrayList<>());
-    Node node7 = new Node(07, new ArrayList<>());
-    Node node8 = new Node(8, new ArrayList<>());
-    Node node9 = new Node(9, new ArrayList<>());
-    Node node10 = new Node(10, new ArrayList<>());
-    Node node11 = new Node(11, new ArrayList<>());
-    Node node12 = new Node(12, new ArrayList<>());
-    Node node13 = new Node(13, new ArrayList<>());
-    Node node14 = new Node(14, new ArrayList<>());
+    nodeA.neighbours.add(nodeE);
+    nodeB.neighbours.add(nodeE);
+    nodeE.neighbours.add(nodeA);
+    nodeE.neighbours.add(nodeB);
+    nodeE.neighbours.add(nodeK);
 
-    node0.outgoingEdges.add(node4);
-    node1.outgoingEdges.add(node4);
-    node4.outgoingEdges.add(node0);
-    node4.outgoingEdges.add(node1);
-    node4.outgoingEdges.add(node6);
+    nodeC.neighbours.add(nodeJ);
+    nodeD.neighbours.add(nodeJ);
+    nodeJ.neighbours.add(nodeC);
+    nodeJ.neighbours.add(nodeD);
+    nodeJ.neighbours.add(nodeK);
 
-    node2.outgoingEdges.add(node5);
-    node3.outgoingEdges.add(node5);
-    node5.outgoingEdges.add(node2);
-    node5.outgoingEdges.add(node3);
-    node5.outgoingEdges.add(node6);
+    nodeK.neighbours.add(nodeE);
+    nodeK.neighbours.add(nodeJ);
+    nodeK.neighbours.add(nodeH);
 
-    node6.outgoingEdges.add(node4);
-    node6.outgoingEdges.add(node5);
-    node6.outgoingEdges.add(node7);
+    nodeH.neighbours.add(nodeK);
+    nodeH.neighbours.add(nodeI);
 
-    node7.outgoingEdges.add(node6);
-    node7.outgoingEdges.add(node8);
+    nodeI.neighbours.add(nodeH);
+    nodeI.neighbours.add(nodeJ);
+    nodeI.neighbours.add(nodeK);
 
-    node8.outgoingEdges.add(node7);
-    node8.outgoingEdges.add(node9);
-    node8.outgoingEdges.add(node10);
+    nodeJ.neighbours.add(nodeI);
+    nodeJ.neighbours.add(nodeL);
+    nodeJ.neighbours.add(nodeM);
+    nodeL.neighbours.add(nodeJ);
+    nodeM.neighbours.add(nodeJ);
 
-    node9.outgoingEdges.add(node8);
-    node9.outgoingEdges.add(node11);
-    node9.outgoingEdges.add(node12);
-    node11.outgoingEdges.add(node9);
-    node12.outgoingEdges.add(node9);
-
-    node10.outgoingEdges.add(node8);
-    node10.outgoingEdges.add(node13);
-    node10.outgoingEdges.add(node14);
-    node13.outgoingEdges.add(node10);
-    node14.outgoingEdges.add(node10);
-
-    graph.nodes.add(node0);
-    graph.nodes.add(node1);
-    graph.nodes.add(node2);
-    graph.nodes.add(node3);
-    graph.nodes.add(node4);
-    graph.nodes.add(node5);
-    graph.nodes.add(node6);
-    graph.nodes.add(node7);
-    graph.nodes.add(node8);
-    graph.nodes.add(node9);
-    graph.nodes.add(node10);
-    graph.nodes.add(node11);
-    graph.nodes.add(node12);
-    graph.nodes.add(node13);
-    graph.nodes.add(node14);
+    nodeK.neighbours.add(nodeI);
+    nodeK.neighbours.add(nodeN);
+    nodeK.neighbours.add(nodeO);
+    nodeN.neighbours.add(nodeK);
+    nodeO.neighbours.add(nodeK);
 
     BidirectionalBfs bidirectionalBfs = new BidirectionalBfs();
-    assertEquals(6, bidirectionalBfs.distanceBetweenTwoNode(graph, node0, node14));
-    assertEquals(6, bidirectionalBfs.distanceBetweenTwoNode(graph, node2, node12));
+    assertEquals(6, bidirectionalBfs.findShortestPath(nodeA, nodeO).size());
+    assertEquals(6, bidirectionalBfs.findShortestPath(nodeC, nodeM).size());
   }
 }

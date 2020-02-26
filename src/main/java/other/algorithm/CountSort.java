@@ -1,4 +1,4 @@
-package other;
+package other.algorithm;
 
 public class CountSort {
   public static void sort(int[] array) {

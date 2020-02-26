@@ -86,22 +86,42 @@ public class SumLists {
     System.out.println();
   }
 
+  public ListNode convertNumberToLinkedList(int number) {
+    ListNode tail = null;
+    ListNode node = null;
+    while (number > 0) {
+      node = new ListNode(number % 10);
+      node.next = tail;
+      tail = node;
+      number = number / 10;
+    }
+    return node;
+  }
+
+  public ListNode convertNumberToReversedLinkedList(int number) {
+    ListNode head = new ListNode(number % 10);
+    number = number / 10;
+    ListNode node = head;
+    while (number > 0) {
+      ListNode next = new ListNode(number % 10);
+      number = number / 10;
+      node.next = next;
+      node = next;
+    }
+    return head;
+  }
+
   public static void main(String[] args) {
-    ListNode listNode11 = new ListNode(7);
-    ListNode listNode12 = new ListNode(1);
-    ListNode listNode13 = new ListNode(9);
-    listNode11.next = listNode12;
-    listNode12.next = listNode13;
-
-    ListNode listNode21 = new ListNode(5);
-    ListNode listNode22 = new ListNode(9);
-    listNode21.next = listNode22;
-
     SumLists sumLists = new SumLists();
-    ListNode ans = sumLists.addTwoNumbers(listNode11, listNode21);
+    ListNode reversedListNodeHead1 = sumLists.convertNumberToReversedLinkedList(719);
+    ListNode reversedListNodeHead2 = sumLists.convertNumberToReversedLinkedList(59);
+
+    ListNode ans = sumLists.addTwoNumbers(reversedListNodeHead1, reversedListNodeHead2);
     sumLists.printLinkedList(ans);
 
-    ListNode reversedLinkedList = sumLists.addForwardReadingNumber(listNode11, listNode21);
+    ListNode listNodeHead1 = sumLists.convertNumberToLinkedList(719);
+    ListNode listNodeHead2 = sumLists.convertNumberToLinkedList(59);
+    ListNode reversedLinkedList = sumLists.addForwardReadingNumber(listNodeHead1, listNodeHead2);
     sumLists.printLinkedList(reversedLinkedList);
   }
 }

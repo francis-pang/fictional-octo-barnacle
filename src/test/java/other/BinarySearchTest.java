@@ -2,6 +2,7 @@ package other;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import other.algorithm.BinarySearch;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
