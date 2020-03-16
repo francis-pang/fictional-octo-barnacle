@@ -1,39 +1,27 @@
 package crackingthecodinginterview.hard;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class TheMasseuse {
-  private static int NO_TIME = 0;
-  private static int INVALID_ENTRY = -1;
-  private Map<Integer, Integer> maximumTimeByStartSlot;
-
-  public int getMaximumNumberOfMinutesForMasseuse(int[] appointmentRequests) {
-    maximumTimeByStartSlot = new HashMap<>();
-    if (appointmentRequests == null) {
-      return INVALID_ENTRY;
+  public int findMaxTime(int[] array) {
+    if (array == null || array.length == 0) {
+      return 0;
     }
-
-    if (appointmentRequests.length == 0) {
-      return NO_TIME;
+    if (array.length == 1) {
+      return array[0];
     }
-
-    // Add entry for last slot
-    maximumTimeByStartSlot.put(appointmentRequests.length - 1, appointmentRequests[appointmentRequests.length - 1]);
-    return maxTimeForAppointment(appointmentRequests, 0, appointmentRequests.length - 1);
+    int arrayBound = array.length - 1;
+    int skipOneCacheMax = array[arrayBound];
+    int immediateNextCacheMax = Math.max(array[arrayBound - 1], array[arrayBound]);
+    for (int i = arrayBound - 2; i >= 0; i--) {
+      int timeWithCurrentSlotTaken = array[i] + skipOneCacheMax;
+      skipOneCacheMax = immediateNextCacheMax;
+      immediateNextCacheMax = Math.max(timeWithCurrentSlotTaken, immediateNextCacheMax);
+    }
+    return immediateNextCacheMax;
   }
 
-  private int maxTimeForAppointment(int[] appointmentSlots, int start, int end) {
-    if (maximumTimeByStartSlot.containsKey(start)) {
-      return maximumTimeByStartSlot.get(start);
-    }
-    if (start > end) {
-      return NO_TIME;
-    }
-    int maxTimeIfTakeSlot = appointmentSlots[start] + maxTimeForAppointment(appointmentSlots, start + 2, end);
-    int maxTimeIfDontTakeSlot = maxTimeForAppointment(appointmentSlots, start + 1, end);
-    int maxTime = Math.max(maxTimeIfDontTakeSlot, maxTimeIfTakeSlot);
-    maximumTimeByStartSlot.put(start, maxTime);
-    return maxTime;
+  public static void main(String[] args) {
+    TheMasseuse theMasseuse = new TheMasseuse();
+    int answer = theMasseuse.findMaxTime(new int[]{30, 15, 60, 75, 45, 15, 15, 45});
+    System.out.println(answer);
   }
 }
