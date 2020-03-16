@@ -37,7 +37,7 @@ public class MostCommonWord {
         return maxHeap.poll().word;
     }
 
-    class WordNode implements Comparable {
+    class WordNode implements Comparable<WordNode> {
         public int frequency;
         public String word;
 
@@ -47,12 +47,8 @@ public class MostCommonWord {
         }
 
         @Override
-        public int compareTo (Object o){
-            if (o instanceof WordNode) {
-                return ((WordNode) o).frequency - this.frequency;
-            } else {
-                return -1;
-            }
+        public int compareTo (WordNode wordNode){
+            return wordNode.frequency - this.frequency;
         }
     }
 }

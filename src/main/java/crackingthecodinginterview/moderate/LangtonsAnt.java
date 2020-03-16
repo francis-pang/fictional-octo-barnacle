@@ -157,7 +157,7 @@ public class LangtonsAnt {
     return newColor;
   }
 
-  class GridPosition implements Comparable {
+  class GridPosition implements Comparable<GridPosition> {
     public int row;
     public int column;
 
@@ -167,7 +167,7 @@ public class LangtonsAnt {
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(GridPosition o) {
       if (this == o) {
         return 0;
       }

@@ -56,7 +56,7 @@ public class CampusBikes {
       return Math.abs(firstLocation[0] - secondLocation[0]) + Math.abs(firstLocation[1] - secondLocation[1]);
     }
 
-    public class ManhattanDistance implements Comparable {
+    public class ManhattanDistance implements Comparable<ManhattanDistance> {
       public int workerIndex;
       public int bikeIndex;
       public int distance;
@@ -68,17 +68,16 @@ public class CampusBikes {
       }
 
       @Override
-      public int compareTo(Object o) {
-        if (o == null) {
+      public int compareTo(ManhattanDistance manhattanDistance) {
+        if (manhattanDistance == null) {
           return -1;
         }
-        ManhattanDistance that = (ManhattanDistance) o;
-        if (that.distance != this.distance) {
-          return this.distance - that.distance;
-        } else if (that.workerIndex != this.workerIndex) {
-          return this.workerIndex - that.workerIndex;
+        if (manhattanDistance.distance != this.distance) {
+          return this.distance - manhattanDistance.distance;
+        } else if (manhattanDistance.workerIndex != this.workerIndex) {
+          return this.workerIndex - manhattanDistance.workerIndex;
         } else {
-          return this.bikeIndex - that.bikeIndex;
+          return this.bikeIndex - manhattanDistance.bikeIndex;
         }
       }
     }

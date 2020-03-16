@@ -1,5 +1,6 @@
 package crackingthecodinginterview.treesandgraphs;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.StringJoiner;
  * This is a practice for Breadth first search of a tree
  */
 public class BreadthFirstSearch {
-  Queue<Node> yetToBeProcessQueue = new LinkedList<>();
+  Queue<Node> yetToBeProcessQueue = new ArrayDeque<>();
 
   public String printTree(Node root) {
     if (root == null) {

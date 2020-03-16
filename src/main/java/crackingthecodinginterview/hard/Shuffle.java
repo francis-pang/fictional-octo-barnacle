@@ -1,5 +1,6 @@
 package crackingthecodinginterview.hard;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -11,15 +12,13 @@ import java.util.concurrent.ThreadLocalRandom;
  * perfect.
  */
 public class Shuffle {
-  private final int DECK_SIZE = 52;
-
   public void shuffleADeckOfCards() {
     List<PokerCard> deck = createDeck();
     shuffleCard(deck);
   }
 
   private List<PokerCard> createDeck() {
-    List<PokerCard> deck = new LinkedList<>();
+    List<PokerCard> deck = new ArrayList<>();
     for (Suit suit : Suit.values()) {
       for (Rank rank : Rank.values()) {
         deck.add(new PokerCard(suit, rank));

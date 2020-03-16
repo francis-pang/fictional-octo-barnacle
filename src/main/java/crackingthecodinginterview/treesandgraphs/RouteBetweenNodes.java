@@ -1,5 +1,6 @@
 package crackingthecodinginterview.treesandgraphs;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ public class RouteBetweenNodes {
         /*
          * Going to use breadth first search for this
          */
-        Queue<DirectedNode> queue = new LinkedList<DirectedNode>();
+        Queue<DirectedNode> queue = new ArrayDeque<>();
 
         // Initialisation stage - Put the first element into the queue first
         queue.add(node1);

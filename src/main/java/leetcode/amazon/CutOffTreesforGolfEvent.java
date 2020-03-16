@@ -84,7 +84,7 @@ class CutOffTreesforGolfEvent {
             if (shortestDistance == null) { // No known path yet
                 shortestDistance = -1;
             } else {
-                shortestDistance = shortestDistance; // remained, no change
+                // remained, no change
             }
         } else { // last known path is valid
             if (shortestDistance == null) {

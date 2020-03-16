@@ -34,14 +34,13 @@ class KClosestPointsToOrigin {
         return (int) (Math.pow(xCoordinate, 2) + Math.pow(yCoordinate, 2));
     }
 
-    class Point implements Comparable {
+    class Point implements Comparable<Point> {
         public int[] coordinates;
         public int distance;
 
         @Override
-        public int compareTo(Object o) {
-            Point point = (Point) o;
-            return point.distance - this.distance;
+        public int compareTo(Point o) {
+            return o.distance - this.distance;
         }
     }
 }

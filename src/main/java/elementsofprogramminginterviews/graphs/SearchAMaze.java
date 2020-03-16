@@ -1,6 +1,7 @@
 package elementsofprogramminginterviews.graphs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class SearchAMaze {
       return false;
     }
     path.add(position);
-    if (position.equals(exit)) {
+    if (Arrays.equals(position, exit)) {
       return true;
     }
     // Assume that a person can only walk in 4 directions

@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Queue;
 
 public class BinaryTreeLevelOrderTraversal {
   static class Solution {
-    Queue<TreeNode> sameLevelQueue = new LinkedList<>();
+    Queue<TreeNode> sameLevelQueue = new ArrayDeque<>();
 
     public List<List<Integer>> levelOrder(TreeNode root) {
       /*
@@ -27,9 +28,9 @@ public class BinaryTreeLevelOrderTraversal {
        * space for storing all the list of list of nodes.
        */
       if (root == null) {
-        return new LinkedList<>();
+        return new ArrayList<>();
       }
-      Queue<TreeNode> queue = new LinkedList<>();
+      Queue<TreeNode> queue = new ArrayDeque<>();
       queue.offer(root);
       List<List<Integer>> listOfList = new ArrayList<>();
       while (!queue.isEmpty()) {
@@ -45,7 +46,7 @@ public class BinaryTreeLevelOrderTraversal {
        * This algorithm is run on O(n) because you go through each item in the queue
        */
       List<Integer> integerList = new ArrayList<>();
-      Queue<TreeNode> nextLevelQueue = new LinkedList<>();
+      Queue<TreeNode> nextLevelQueue = new ArrayDeque<>();
       while (!queue.isEmpty()) {
         TreeNode treeNode = queue.poll();
         integerList.add(treeNode.val);

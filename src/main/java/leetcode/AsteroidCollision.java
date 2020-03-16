@@ -72,6 +72,6 @@ public class AsteroidCollision {
 
   public static void main(String[] args) {
     AsteroidCollision asteroidCollision = new AsteroidCollision();
-    System.out.println(asteroidCollision.asteroidCollision(new int[]{8, -8}));
+    asteroidCollision.asteroidCollision(new int[]{8, -8});
   }
 }

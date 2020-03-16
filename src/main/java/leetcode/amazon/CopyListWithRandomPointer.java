@@ -85,5 +85,10 @@ public class CopyListWithRandomPointer {
                 return false;
             }
         }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(val, next, random);
+        }
     }
 }
