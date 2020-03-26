@@ -17,6 +17,11 @@ class MinStack {
    * Push element x onto stack.
    */
   public void push(int x) {
+    if (minStack.isEmpty()) {
+      minStack.push(x);
+      itemStack.push(x);
+      return;
+    }
     int smallestItem = minStack.peek();
     if (smallestItem >= x) {
       minStack.push(x);
@@ -31,10 +36,11 @@ class MinStack {
     if (minStack.isEmpty()) {
       return;
     }
-    Integer item = minStack.pop();
-    if (minStack.peek() == item) {
+    int item = minStack.peek();
+    if (itemStack.peek().equals(item)) {
       minStack.pop();
     }
+    itemStack.pop();
   }
 
   /**
