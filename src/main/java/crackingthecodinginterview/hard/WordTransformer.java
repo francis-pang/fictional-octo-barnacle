@@ -35,7 +35,7 @@ public class WordTransformer {
           targetNode = node;
         }
         for (Node iteratingNode : nodesOfSameLength) {
-          if (iteratingNode.value.equals(word) || node.neighbours.contains(word)) {
+          if (iteratingNode.value.equals(word) || node.neighbours.contains(node)) {
             continue;
           }
           String iteratingWord = iteratingNode.value;
@@ -94,8 +94,8 @@ public class WordTransformer {
   }
 
   class Node {
-    String value;
-    Set<Node> neighbours;
+    public String value;
+    public Set<Node> neighbours;
 
     public Node(String value) {
       this.value = value;

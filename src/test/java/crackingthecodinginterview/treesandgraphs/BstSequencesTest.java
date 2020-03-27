@@ -3,6 +3,7 @@ package crackingthecodinginterview.treesandgraphs;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,13 +23,12 @@ class BstSequencesTest {
   void allSeqBst_singleNode() {
     BstSequences.Node root = new BstSequences.Node();
     root.value = 3;
-    List<int[]> actual = bstSequences.computeAllBstSequences(root);
     List<int[]> expected = new ArrayList<>();
     int[] answer = {3};
     expected.add(answer);
     expected.forEach(element -> assertTrue(
         contains(element, expected),
-        "Expected element" + element + " is not inside the actual list")
+        "Expected element" + Arrays.toString(element) + " is not inside the actual list")
     );
   }
 
@@ -47,7 +47,7 @@ class BstSequencesTest {
     expected.add(answer);
     expected.forEach(element -> assertTrue(
         contains(element, actual),
-        "Expected element" + element + " is not inside the actual list")
+        "Expected element" + Arrays.toString(element) + " is not inside the actual list")
     );
   }
 
@@ -66,7 +66,7 @@ class BstSequencesTest {
     expected.add(answer);
     expected.forEach(element -> assertTrue(
         contains(element, actual),
-        "Expected element" + element + " is not inside the actual list")
+        "Expected element" + Arrays.toString(element) + " is not inside the actual list")
     );
   }
 
@@ -92,7 +92,7 @@ class BstSequencesTest {
     assertEquals(expected.size(), actual.size());
     expected.forEach(element -> assertTrue(
         contains(element, actual),
-        "Expected element" + element + " is not inside the actual list")
+        "Expected element" + Arrays.toString(element) + " is not inside the actual list")
     );
   }
 
@@ -153,7 +153,7 @@ class BstSequencesTest {
     assertEquals(expected.size(), actual.size());
     expected.forEach(element -> assertTrue(
         contains(element, actual),
-        "Expected element" + element + " is not inside the actual list")
+        "Expected element" + Arrays.toString(element) + " is not inside the actual list")
     );
   }
 

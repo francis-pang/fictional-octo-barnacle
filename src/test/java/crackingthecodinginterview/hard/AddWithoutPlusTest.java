@@ -3,7 +3,7 @@ package crackingthecodinginterview.hard;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddWithoutPlusTest {
   static AddWithoutPlus addWithoutPlus;
@@ -25,11 +25,11 @@ class AddWithoutPlusTest {
 
   @Test
   void addTwoNumber_addZeroLeft() {
-    assertEquals((9), addWithoutPlus.addTwoNumber(0, 9));
+    assertEquals(9, addWithoutPlus.addTwoNumber(0, 9));
   }
 
   @Test
   void addTwoNumber_addZeroRight() {
-    assertEquals((44568), addWithoutPlus.addTwoNumber(44568, 0));
+    assertEquals(44568, addWithoutPlus.addTwoNumber(44568, 0));
   }
 }

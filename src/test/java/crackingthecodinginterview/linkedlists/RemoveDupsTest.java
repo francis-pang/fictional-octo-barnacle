@@ -3,11 +3,11 @@ package crackingthecodinginterview.linkedlists;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RemoveDupsTest {
   private static RemoveDups removeDups;
@@ -19,14 +19,14 @@ class RemoveDupsTest {
 
   @Test
   void removeEmptyList() {
-    List testLinkedList = new LinkedList();
+    List testLinkedList = new ArrayList();
     assertEquals(testLinkedList, removeDups.removeDuplicate(testLinkedList));
     assertEquals(testLinkedList, removeDups.removeDuplicateNoBuffer(testLinkedList));
   }
 
   @Test
   void removeSingleItemList() {
-    List<Integer> testLinkedList = new LinkedList<Integer>();
+    List<Integer> testLinkedList = new ArrayList<>();
     testLinkedList.add(5);
     assertEquals(testLinkedList, removeDups.removeDuplicate(testLinkedList));
     assertEquals(testLinkedList, removeDups.removeDuplicateNoBuffer(testLinkedList));
@@ -34,7 +34,7 @@ class RemoveDupsTest {
 
   @Test
   void remove2OutOf5SortedList() {
-    List<Integer> testLinkedList = new LinkedList<Integer>();
+    List<Integer> testLinkedList = new ArrayList<>();
     testLinkedList.add(1);
     testLinkedList.add(2);
     testLinkedList.add(2);
@@ -43,7 +43,7 @@ class RemoveDupsTest {
 
     List<Integer> bufferedTestList = testLinkedList.stream().collect(Collectors.toList());
 
-    List<Integer> expectedLinkedList = new LinkedList<Integer>();
+    List<Integer> expectedLinkedList = new ArrayList<>();
     expectedLinkedList.add(1);
     expectedLinkedList.add(2);
     expectedLinkedList.add(3);
@@ -55,7 +55,7 @@ class RemoveDupsTest {
 
   @Test
   void remove3DupUnsortedList() {
-    List<Integer> testLinkedList = new LinkedList<Integer>();
+    List<Integer> testLinkedList = new ArrayList<>();
     testLinkedList.add(5);
     testLinkedList.add(6);
     testLinkedList.add(5);
@@ -68,7 +68,7 @@ class RemoveDupsTest {
 
     List<Integer> bufferedTestList = testLinkedList.stream().collect(Collectors.toList());
 
-    List<Integer> expectedLinkedList = new LinkedList<Integer>();
+    List<Integer> expectedLinkedList = new ArrayList<>();
     expectedLinkedList.add(5);
     expectedLinkedList.add(6);
     expectedLinkedList.add(7);
