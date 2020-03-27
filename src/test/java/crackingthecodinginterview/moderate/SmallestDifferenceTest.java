@@ -3,10 +3,7 @@ package crackingthecodinginterview.moderate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SmallestDifferenceTest {
   private static SmallestDifference smallestDifference;
@@ -17,52 +14,64 @@ class SmallestDifferenceTest {
   }
 
   @Test
-  void computeSmallestDifferencePair_2EmptyList() {
+  void bothEmptyList() {
+    assertEquals(-1, smallestDifference.smallDifferencePair(new int[]{}, new int[]{}));
   }
 
   @Test
-  void computeSmallestDifferencePair_1EmptyList1NonEmptyList() {
+  void arrayAIsNull() {
+    assertEquals(-1, smallestDifference.smallDifferencePair(null, new int[]{8, 6, 3, 2, 4, -5, -5, 7}));
   }
 
   @Test
-  void computeSmallestDifferencePair_SameSizeList() {
-    // 6 elements
-    List<Integer> listA = new ArrayList<>();
-    listA.add(224);
-    listA.add(68);
-    listA.add(23);
-    listA.add(84);
-    listA.add(119);
-    listA.add(148);
-
-    List<Integer> listB = new ArrayList<>();
-    listB.add(69);
-    listB.add(12);
-    listB.add(188);
-    listB.add(30);
-    listB.add(131);
-    listB.add(187);
-    listB.add(250);
-    listB.add(131);
-
-    SmallestDifference.Pair smallestPair = new SmallestDifference.Pair(69, 68);
-    System.out.println(smallestDifference.computeSmallestDifferencePair(listA, listB));
-    assertEquals(smallestPair, smallestDifference.computeSmallestDifferencePair(listA, listB),
-        "Not the same + " + smallestDifference.computeSmallestDifferencePair(listA, listB).toString());
+  void arrayBIsNull() {
+    assertEquals(-1, smallestDifference.smallDifferencePair(new int[]{-6, -6, -10, -9}, null));
   }
 
   @Test
-  void computeSmallestDifferencePair_DifferentSizeList() {
-
+  void arrayAIsEmpty() {
+    assertEquals(-1, smallestDifference.smallDifferencePair(new int[]{}, new int[]{8, 6, 3, 2, 4, -5, -5, 7}));
   }
 
   @Test
-  void computeSmallestDifferencePair_1ListAllSmallerThanBigList() {
-
+  void arrayBIsEmpty() {
+    assertEquals(-1, smallestDifference.smallDifferencePair(new int[]{-6, -6, -10, -9}, new int[]{}));
   }
 
   @Test
-  void computeSmallestDifferencePair_IdenticalList() {
+  void arrayASingleElement() {
+    assertEquals(1, smallestDifference.smallDifferencePair(new int[]{9}, new int[]{8, 6, 3, 2, 4, -5, -5, 7}));
+  }
 
+  @Test
+  void arrayBSingleElement() {
+    assertEquals(15, smallestDifference.smallDifferencePair(new int[]{-6, -6, -10, -9}, new int[]{9}));
+  }
+
+  @Test
+  void bothSingleElement() {
+    assertEquals(15, smallestDifference.smallDifferencePair(new int[]{-6}, new int[]{9}));
+  }
+
+  @Test
+  void bothArraySameElement() {
+    assertEquals(0, smallestDifference.smallDifferencePair(new int[]{9}, new int[]{9}));
+  }
+
+  @Test
+  void arrayAHasMoreElementsThanArrayB() {
+    assertEquals(1, smallestDifference.smallDifferencePair(new int[]{-6, -6, -10, -9},
+        new int[]{8, 6, 3, 2, 4, -5, -5, 7}));
+  }
+
+  @Test
+  void arrayBHasMoreElementsThanArrayA() {
+    assertEquals(3, smallestDifference.smallDifferencePair(new int[]{7, 8, -5, -1},
+        new int[]{-8, -10}));
+  }
+
+  @Test
+  void allNumberOfArrayAIsBiggerThanArrayB() {
+    assertEquals(3, smallestDifference.smallDifferencePair(new int[]{7, 8, -5, -1}, new int[]{-8, -10}));
   }
 }
