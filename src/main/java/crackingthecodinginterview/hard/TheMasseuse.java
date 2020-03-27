@@ -3,7 +3,7 @@ package crackingthecodinginterview.hard;
 public class TheMasseuse {
   public int findMaxTime(int[] array) {
     if (array == null || array.length == 0) {
-      return 0;
+      return -1;
     }
     if (array.length == 1) {
       return array[0];

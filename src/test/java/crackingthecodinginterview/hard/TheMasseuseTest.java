@@ -15,31 +15,31 @@ class TheMasseuseTest {
 
   @Test
   void getMaximumNumberOfMinutesForMasseuse_null() {
-    assertEquals(-1, theMasseuse.getMaximumNumberOfMinutesForMasseuse(null));
+    assertEquals(-1, theMasseuse.findMaxTime(null));
   }
 
   @Test
   void getMaximumNumberOfMinutesForMasseuse_single() {
-    assertEquals(5, theMasseuse.getMaximumNumberOfMinutesForMasseuse(new int[]{5}));
+    assertEquals(5, theMasseuse.findMaxTime(new int[]{5}));
   }
 
   @Test
   void getMaximumNumberOfMinutesForMasseuse_empty() {
-    assertEquals(0, theMasseuse.getMaximumNumberOfMinutesForMasseuse(new int[]{}));
+    assertEquals(-1, theMasseuse.findMaxTime(new int[]{}));
   }
 
   @Test
   void getMaximumNumberOfMinutesForMasseuse_2ElementsTakeFirst() {
-    assertEquals(4, theMasseuse.getMaximumNumberOfMinutesForMasseuse(new int[]{3, 4}));
+    assertEquals(4, theMasseuse.findMaxTime(new int[]{3, 4}));
   }
 
   @Test
   void getMaximumNumberOfMinutesForMasseuse_2ElementsTakeLast() {
-    assertEquals(4, theMasseuse.getMaximumNumberOfMinutesForMasseuse(new int[]{4, 2}));
+    assertEquals(4, theMasseuse.findMaxTime(new int[]{4, 2}));
   }
 
   @Test
   void getMaximumNumberOfMinutesForMasseuse_Multiples() {
-    assertEquals(180, theMasseuse.getMaximumNumberOfMinutesForMasseuse(new int[]{30, 15, 60, 75, 45, 15, 15, 45}));
+    assertEquals(180, theMasseuse.findMaxTime(new int[]{30, 15, 60, 75, 45, 15, 15, 45}));
   }
 }
