@@ -42,11 +42,11 @@ class KthMultipleTest {
 
   @Test
   void kNumber_10() {
-    assertEquals(45, kthMultiple.getKthMultiple(primeFactors, 10));
+    assertEquals(35, kthMultiple.getKthMultiple(primeFactors, 10));
   }
 
   @Test
   void kNumber_11() {
-    assertEquals(49, kthMultiple.getKthMultiple(primeFactors, 11));
+    assertEquals(45, kthMultiple.getKthMultiple(primeFactors, 11));
   }
 }
