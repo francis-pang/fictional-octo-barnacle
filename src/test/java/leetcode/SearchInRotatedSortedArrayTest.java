@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SearchInRotatedSortedArrayTest {
-  private static SearchInRotatedSortedArray.Solution solution;
+  private static SearchInRotatedSortedArray searchInRotatedSortedArray;
 
   @BeforeAll
   static void setUpOnce() {
-    solution = new SearchInRotatedSortedArray.Solution();
+    searchInRotatedSortedArray = new SearchInRotatedSortedArray();
   }
 
   @Test
   void search_leetcode_sample() {
-    assertEquals(0, solution.search(new int[]{3, 1}, 3));
+    assertEquals(0, searchInRotatedSortedArray.search(new int[]{3, 1}, 3));
   }
 }
