@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RecursiveMultiply {
+  // Note that this method assume that the answer falls within range of int.
   public int multiplyRecursively(int firstNumber, int secondNumber) {
     Map<Integer, Integer> table = new HashMap<>();
     table.put(1, Math.max(firstNumber, secondNumber));
     return multiply(Math.max(firstNumber, secondNumber), Math.min(firstNumber, secondNumber), table);
-
   }
 
   private int multiply(int number1, int number2, Map<Integer, Integer> table) {

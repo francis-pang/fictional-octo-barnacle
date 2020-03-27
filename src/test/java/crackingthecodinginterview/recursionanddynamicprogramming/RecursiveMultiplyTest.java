@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class RecursiveMultiplyTest {
   private static RecursiveMultiply recursiveMultiply;
@@ -58,18 +57,8 @@ class RecursiveMultiplyTest {
   }
 
   @Test
-  void multipleRecursively_secondNumberMaxFirstNumberOne() {
-    assertThrows(StackOverflowError.class, () -> recursiveMultiply.multiplyRecursively(1, Integer.MAX_VALUE));
-  }
-
-  @Test
   void multipleRecursively_firstNumberMax() {
     // The answer is -6, because of the overflowing integer
     assertEquals(-6, recursiveMultiply.multiplyRecursively(Integer.MAX_VALUE, 6));
-  }
-
-  @Test
-  void multipleRecursively_seconNumberMax() {
-    assertThrows(StackOverflowError.class, () -> recursiveMultiply.multiplyRecursively(6, Integer.MAX_VALUE));
   }
 }
