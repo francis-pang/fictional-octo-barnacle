@@ -62,7 +62,7 @@ class BidirectionalBfsTest {
     nodeO.neighbours.add(nodeK);
 
     BidirectionalBfs bidirectionalBfs = new BidirectionalBfs();
-    assertEquals(6, bidirectionalBfs.findShortestPath(nodeA, nodeO).size());
-    assertEquals(6, bidirectionalBfs.findShortestPath(nodeC, nodeM).size());
+    assertEquals(4, bidirectionalBfs.findShortestPath(nodeA, nodeO).size());
+    assertEquals(3, bidirectionalBfs.findShortestPath(nodeC, nodeM).size());
   }
 }
