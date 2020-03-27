@@ -6,7 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StackOfBoxes {
+  private static final int INVALID_INPUT = -1;
+
   public int maxHeightOfStackedBoxes(int[] heights, int[] widths, int[] depths) {
+    if (heights.length == 0) {
+      return 0;
+    }
+    if (heights.length != widths.length ||
+        heights.length != depths.length) {
+      return INVALID_INPUT;
+    }
     ArrayList<Box> boxes = constructBox(heights, widths, depths);
     Map<Integer, Integer> memoTable = new HashMap<>();
     Box infinityBigBox = new Box(Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -63,25 +72,23 @@ public class StackOfBoxes {
     }
 
     public boolean isSmaller(Box bigger) {
-      return (this.height < bigger.height && depth < bigger.depth && width < bigger.width);
+      return (this.height < bigger.height &&
+          this.depth < bigger.depth &&
+          this.width < bigger.width);
     }
 
     @Override
-    public int compareTo(Box o) {
-      if (this.height != o.height) {
-        return this.height - o.height;
+    public int compareTo(Box that) {
+      if (this.height != that.height) {
+        return that.height - this.height;
       }
-      if (this.width != o.width) {
-        return this.width - o.width;
+      if (this.width != that.width) {
+        return that.width - this.width;
       }
-      if (this.depth != o.depth) {
-        return this.depth - o.depth;
+      if (this.depth != that.depth) {
+        return that.depth - this.depth;
       }
       return 0;
     }
-  }
-
-  public static void main(String[] args) {
-
   }
 }
