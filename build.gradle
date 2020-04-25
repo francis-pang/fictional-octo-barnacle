@@ -11,8 +11,9 @@ repositories {
 }
 
 dependencies {
+    testImplementation('org.assertj:assertj-core:3.+')
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.+')
-    testImplementation('org.assertj:assertj-core:3.12.2')
+    testImplementation('org.junit.jupiter:junit-jupiter-params:5.+')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.+')
 }
 
@@ -29,4 +30,8 @@ tasks.withType(JavaCompile) {
 
 test {
     useJUnitPlatform()
+    systemProperties = [
+            'junit.jupiter.execution.timeout.test.method.default': '1s',
+            'junit.jupiter.execution.parallel.enabled': true
+    ]
 }
