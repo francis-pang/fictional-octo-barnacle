@@ -1,78 +1,82 @@
 package leetcode.google;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 public class _3SumClosest {
-  public int threeSumClosest(int[] nums, int target) {
-    TreeMap<Integer, Integer> sortedMap = new TreeSet<>();
+  public int threeSumClosest(int[] array, int target) {
+    TreeMap<Integer, Integer> sortedMap = new TreeMap<>();
     for (int element : array) {
       sortedMap.compute(element, (k, v) -> (v == null) ? 1 : v + 1);
     }
 
-    int closestDiff = Integer.MAX_VALUE;
-    int[] closestArray = new int[3];
+    int nearestNumber = Integer.MAX_VALUE;
+    int smallestDiff = Integer.MAX_VALUE;
     for (int i = 0; i < array.length; i++) {
       // Take out first, later put back
-      sortedMap.compute(array[i], (k, v) -> v--);
+      sortedMap.compute(array[i], (k, v) -> v - 1);
       for (int j = i + 1; j < array.length; j++) {
         int pairSum = array[i] + array[j];
-        sortedMap.compute(array[j], (k, v) -> v--);
-        int diff = target - pairSum;
+        sortedMap.compute(array[j], (k, v) -> v - 1);
+        int thirdNumberTarget = target - pairSum;
         // find exact match
-        if (sortedMap.getOrDefault(diff, 0) > 0) {
-          closestArray = new int[]{array[i], array[j], diff};
-          return closestArray;
+        if (sortedMap.getOrDefault(thirdNumberTarget, 0) > 0) {
+          return target;
         }
         // By this time, we know there isn’t exact match
-        int ceiling = diff;
-        Map.Entry<Integer, Integer> maxEntry;
-        do {
-          maxEntry; =sortedMap.ceilingEntry(ceiling);
-          if (maxEntry != null) {
-            ceiling = maxEntry.getKey() + 1;
-          }
-        } while (maxEntry != null && maxEntry.getValue() > 0);
-
-        int floor = diff;
+        int ceiling = thirdNumberTarget + 1;
         Map.Entry<Integer, Integer> minEntry;
         do {
-          maxEntry; =sortedMap.floorEntry(floor);
+          minEntry = sortedMap.ceilingEntry(ceiling);
           if (minEntry != null) {
-            floor = minEntry.getKey() - 1;
+            ceiling = minEntry.getKey() + 1;
+          }
+        } while (minEntry != null && minEntry.getValue() == 0);
+
+        int floor = thirdNumberTarget - 1;
+        Map.Entry<Integer, Integer> maxEntry;
+        do {
+          maxEntry = sortedMap.floorEntry(floor);
+          if (maxEntry != null) {
+            floor = maxEntry.getKey() - 1;
           }
         } while (maxEntry != null && maxEntry.getValue() == 0);
 
         int actualDiff;
-        int[] close;
-        if (maxEntry == null) {
-          int sum = pairSum + minEntry.getKey();
+        int sum;
+        if (minEntry == null) {
+          sum = pairSum + maxEntry.getKey();
           actualDiff = Math.abs(sum - target);
-          close = new int[]{array[i], array[j], minEntry.getKey()};
-        } else if (minEntry == null) {
-          int sum = pairSum + maxEntry.getKey();
+        } else if (maxEntry == null) {
+          sum = pairSum + minEntry.getKey();
           actualDiff = Math.abs(sum - target);
-          close = new int[]{array[i], array[j], maxEntry.getKey()};
-        } else {
-          int minSum = pairSum + minEntry.getKey();
-          int maxSum = pairSum + maxEntry.getKey();
+        } else { // both maxEntry and minEntry are not null
+          int minSum = pairSum + maxEntry.getKey();
+          int maxSum = pairSum + minEntry.getKey();
           int minDiff = Math.abs(minSum - target);
           int maxDiff = Math.abs(maxSum - target);
-          if (minDiff >= maxDiff) {
-            diff = minDiff;
-            close = new int[]{array[i], array[j], minEntry.getKey()};
+          if (minDiff <= maxDiff) {
+            actualDiff = minDiff;
+            sum = minSum;
           } else {
-            diff = maxDiff;
-            close = new int[]{array[i], array[j], maxEntry.getKey()};
+            actualDiff = maxDiff;
+            sum = maxSum;
           }
         }
-        if (diff < closestDiff) {
-          closestDiff = diff;
-          cloestArray = close;
+        if (actualDiff < smallestDiff) {
+          nearestNumber = sum;
+          smallestDiff = actualDiff;
         }
-        sortedMap.compute(array[j], (k, v) -> v++);
+        sortedMap.compute(array[j], (k, v) -> v + 1);
       }
-      sortedMap.compute(array[i], (k, v) -> v++);
+      sortedMap.compute(array[i], (k, v) -> v + 1);
     }
-    return closestArray;
+    return nearestNumber;
+  }
 
+  public static void main(String[] args) {
+    _3SumClosest sumClosest = new _3SumClosest();
+    System.out.println(sumClosest.threeSumClosest(new int[]{-5, 5, 1, -10, 7}, -5));
   }
 }
 
