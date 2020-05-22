@@ -5,6 +5,64 @@ import java.util.TreeMap;
 
 public class _3SumClosest {
   public int threeSumClosest(int[] array, int target) {
+    // Try using two pointers solution
+    sortArray(array);
+
+    // Once sorted, can use two pointer to find your best match
+    int closestSum = Integer.MAX_VALUE;
+    int smallestDifference = Integer.MAX_VALUE;
+    for (int i = 0; i < array.length - 2; i++) {
+      // Try to do this with linear search
+      int baseValue = array[i];
+      int leftPointer = i + 1;
+      int rightPointer = array.length - 1;
+      while (leftPointer + 1 <= rightPointer) {
+        int threeSum = baseValue + array[leftPointer] + array[rightPointer];
+        int difference = Math.abs(target - threeSum);
+        if (difference < smallestDifference) {
+          closestSum = threeSum;
+          smallestDifference = difference;
+        }
+        if (threeSum == target) { // Found perfect sum
+          return target;
+        } else if (threeSum > target) {
+          rightPointer--;
+        } else { // threeSum < target
+          leftPointer++;
+        }
+      }
+    }
+    return closestSum;
+  }
+
+  private void sortArray(int[] array) {
+    quickSortArray(array, 0, array.length - 1);
+  }
+
+  private void quickSortArray(int[] array, int left, int right) {
+    if (right <= left) {
+      return;
+    }
+    int pivot = right;
+    int partitionPoint = left;
+    for (int i = left; i < right; i++) {
+      if (array[i] < array[pivot]) {
+        swap(array, i, partitionPoint);
+        partitionPoint++;
+      }
+    }
+    swap(array, partitionPoint, pivot);
+    quickSortArray(array, left, partitionPoint - 1);
+    quickSortArray(array, partitionPoint + 1, right);
+  }
+
+  private void swap(int[] array, int a, int b) {
+    int temp = array[a];
+    array[a] = array[b];
+    array[b] = temp;
+  }
+
+  private int binarySearchForClosestSum(int[] array, int target) {
     TreeMap<Integer, Integer> sortedMap = new TreeMap<>();
     for (int element : array) {
       sortedMap.compute(element, (k, v) -> (v == null) ? 1 : v + 1);
@@ -77,6 +135,7 @@ public class _3SumClosest {
   public static void main(String[] args) {
     _3SumClosest sumClosest = new _3SumClosest();
     System.out.println(sumClosest.threeSumClosest(new int[]{-5, 5, 1, -10, 7}, -5));
+    System.out.println(sumClosest.threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
   }
 }
 
