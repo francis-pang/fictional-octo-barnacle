@@ -1,19 +1,6 @@
 package leetcode;
 
 public class SubtreeOfAnotherTree {
-  /**
-   * Definition for a binary tree node.
-   */
-  private static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-  }
-
   public static void main(String[] args) {
     TreeNode n1 = new TreeNode(1);
     TreeNode n2 = new TreeNode(2);

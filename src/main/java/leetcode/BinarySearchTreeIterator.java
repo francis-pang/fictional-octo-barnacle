@@ -3,19 +3,6 @@ package leetcode;
 import java.util.*;
 
 public class BinarySearchTreeIterator {
-  /**
-   * Definition for a binary tree node.
-   **/
-  public static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-  }
-
   static class BSTIterator {
     private Stack<TreeNode> treeStack;
 

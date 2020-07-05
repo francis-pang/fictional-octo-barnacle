@@ -3,23 +3,6 @@ package leetcode;
 import java.util.StringJoiner;
 
 public class LowestCommonAncestorOfABinaryTree {
-  public static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-
-    @Override
-    public String toString() {
-      return new StringJoiner(", ", TreeNode.class.getSimpleName() + "[", "]")
-          .add("val=" + val)
-          .toString();
-    }
-  }
-
   public static void main(String[] args) {
     TreeNode n1 = new TreeNode(1);
     TreeNode n2 = new TreeNode(2);

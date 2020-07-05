@@ -22,19 +22,6 @@ public class PathSum3 {
     System.out.println(solution.pathSum(n1, 1));
   }
 
-  /**
-   * Definition for a binary tree node.
-   */
-  public static class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-  }
-
   static class Solution {
     public int pathSum(TreeNode root, int sum) {
       Map<Integer, Integer> sumMap = new HashMap<>();
