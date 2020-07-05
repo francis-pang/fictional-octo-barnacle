@@ -1,19 +1,8 @@
 package leetcode.google;
 
+import leetcode.TreeNode;
+
 public class CountCompleteTreeNodes {
-  /**
-   * Definition for a binary tree node.
-   */
-  public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-      val = x;
-    }
-  }
-
   class Solution {
     public int countNodes(TreeNode root) {
       if (root == null) {
