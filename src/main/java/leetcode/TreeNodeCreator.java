@@ -26,14 +26,22 @@ public class TreeNodeCreator {
     TreeNode root = new TreeNode(headValue);
     Queue<TreeNode> queue = new ArrayDeque<>();
     queue.add(root);
+    int counter = 0;
     for (Integer val : integerList) {
       TreeNode parentNode = queue.peek();
-      TreeNode newNode = new TreeNode(val);
-      if (parentNode.left == null) {
+      TreeNode newNode = (val != null) ? new TreeNode(val) : null;
+      counter++;
+      if (counter == 1) {
         parentNode.left = newNode;
-      } else {
+      } else if (counter == 2) {
         parentNode.right = newNode;
+      }
+      if (val != null) {
+        queue.add(newNode);
+      }
+      if (counter == 2) {
         queue.poll();
+        counter = 0;
       }
     }
     return root;
