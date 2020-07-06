@@ -1,114 +1,114 @@
 package leetcode;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+import java.util.Stack;
 
 public class RecoverBinarySearchTree {
+  public static void main(String[] args) {
+//    TreeNode root = TreeNodeCreator.createTreeNode("[2,1,null,null,3,4]");
+    TreeNode root = TreeNodeCreator.createTreeNode("[1,3,null,null,2]");
+
+    RecoverBinarySearchTree recoverBinarySearchTree = new RecoverBinarySearchTree();
+    recoverBinarySearchTree.recoverTree(root);
+    System.out.println(root);
+  }
+
   public void recoverTree(TreeNode root) {
     if (root == null) {
       return;
     }
-    Set<TreeNode> treeNodeSet = collectAllNode(root);
-    fixMisplacedNode(root, root, treeNodeSet, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    recoverTreeByIterativeInorderThenSort(root);
   }
 
-  private void fixMisplacedNode(TreeNode root, TreeNode node, Set<TreeNode> treeNodeSet, int min, int max) {
-    if (node.left != null) {
-      int leftChildVal = node.left.val;
-      if (!withinRange(leftChildVal, min, node.val)) {
-        // FOUND!
-        if (!swapNode(node, root, treeNodeSet)) {
-          swapNode(node.left, root, treeNodeSet);
+  private void recoverTreeByIterativeInorderThenSort(TreeNode root) {
+    TreeNode firstMisplacedNode = null;
+    TreeNode secondMisplacedNode = null;
+    findMisplacedNodes(root, firstMisplacedNode, secondMisplacedNode);
+    swap(firstMisplacedNode, secondMisplacedNode);
+  }
+
+  private void swap(TreeNode firstMisplacedNode, TreeNode secondMisplacedNode) {
+    int temp = firstMisplacedNode.val;
+    firstMisplacedNode.val = secondMisplacedNode.val;
+    secondMisplacedNode.val = firstMisplacedNode.val;
+  }
+
+  private void findMisplacedNodes(TreeNode node, TreeNode firstMisplacedNode, TreeNode secondMisplacedNode) {
+    Stack<TreeNode> stack = new Stack();
+    TreeNode predecessorNode = null;
+    while (!stack.isEmpty() || node != null) {
+      while (node != null) {
+        stack.add(node);
+        node = node.left;
+      }
+      node = stack.pop();
+      if (predecessorNode != null && node.val < predecessorNode.val) {
+        secondMisplacedNode = node;
+        if (firstMisplacedNode == null) {
+          // This is the first node found to be misplaced, out of order.
+          // If it is the only misplaced case found, then just need to swap these 2 adjacent nodes
+          firstMisplacedNode = predecessorNode;
+        } else {
+          // We have already found both misplaced nodes, so we will break off the search and do an early exit
+          return;
         }
-        return;
-      } else {
-        fixMisplacedNode(root, node.left, treeNodeSet, min, node.val);
       }
+      predecessorNode = node;
+      node = node.right;
     }
-    if (node.right != null) {
-      int rightChildVal = node.right.val;
-      if (!withinRange(rightChildVal, node.val, max)) {
-        // FOUND
-        // First, test if it is the parent node is the issue, then test if it is the child node is the issue
-        if (!swapNode(node, root, treeNodeSet)) {
-          swapNode(node.right, root, treeNodeSet);
+  }
+
+  private void recoverTreeByRecursiveInorderThenSort(TreeNode root) {
+    // Collect all node
+    ArrayList<TreeNode> nodeValues = collectAllNodesValues(root);
+    // Sort the node
+    sortNodesValues(nodeValues);
+  }
+
+  private void sortNodesValues(ArrayList<TreeNode> nodeValues) {
+    for (int i = 1; i < nodeValues.size(); i++) {
+      boolean sorted = false;
+      int comparisonPosition = i;
+      while (!sorted && comparisonPosition > 0) {
+        int smallerNodeValue = nodeValues.get(comparisonPosition - 1).val;
+        int biggerNodeValue = nodeValues.get(comparisonPosition).val;
+        if (smallerNodeValue < biggerNodeValue) {
+          sorted = true;
+        } else {
+          swap(nodeValues, comparisonPosition - 1, comparisonPosition);
+          comparisonPosition--;
         }
-        return;
-      } else {
-        fixMisplacedNode(root, node.right, treeNodeSet, node.val, max);
       }
     }
   }
 
-  private boolean swapNode(TreeNode nodeToSwap, TreeNode root, Set<TreeNode> treeNodeSet) {
-    int nodeToSwapValue = nodeToSwap.val;
-    for (TreeNode swappingNode : treeNodeSet) {
-      int swappingNodeValue = swappingNode.val;
-      nodeToSwap.val = swappingNodeValue;
-      swappingNode.val = nodeToSwapValue;
-      if (isValidBST(root)) {
-        return true;
-      }
-      // Swap back
-      nodeToSwap.val = nodeToSwapValue;
-      swappingNode.val = swappingNodeValue;
-    }
-    return false;
+  private void swap(ArrayList<TreeNode> nodeValues, int firstPosition, int secondPosition) {
+    int firstValue = nodeValues.get(firstPosition).val;
+    int secondValue = nodeValues.get(secondPosition).val;
+    nodeValues.get(firstPosition).val = secondValue;
+    nodeValues.get(secondPosition).val = firstValue;
   }
 
-  private Set<TreeNode> collectAllNode(TreeNode root) {
-    if (root == null) {
-      return Collections.emptySet();
-    }
-    Set<TreeNode> treeNodeSet = new HashSet<>();
-    collectSubTreeNodes(root, treeNodeSet);
-    return treeNodeSet;
+  private ArrayList<TreeNode> collectAllNodesValues(TreeNode root) {
+    ArrayList<TreeNode> nodesValues = new ArrayList<>();
+    // Collect from in-order traversal
+    fillUpArrayList(root, nodesValues);
+    return nodesValues;
   }
 
-  private void collectSubTreeNodes(TreeNode parent, Set<TreeNode> treeNodeSet) {
-    if (parent == null) {
+  private void fillUpArrayList(TreeNode node, List<TreeNode> nodesValues) {
+    if (node == null) {
       return;
     }
-    treeNodeSet.add(parent);
-    if (parent.left != null) {
-      collectSubTreeNodes(parent.left, treeNodeSet);
-    }
-    if (parent.right != null) {
-      collectSubTreeNodes(parent.right, treeNodeSet);
-    }
-  }
-
-  public boolean isValidBST(TreeNode root) {
-    if (root == null) {
-      return true;
-    }
-    return isBstSubTree(root, Long.MIN_VALUE, Long.MAX_VALUE);
-  }
-
-  private boolean isBstSubTree(TreeNode node, long min, long max) {
-    boolean subTreeIsBst = true;
     if (node.left != null) {
-      int leftChildVal = node.left.val;
-      if (!withinRange(leftChildVal, min, node.val)) {
-        return false;
-      }
-      subTreeIsBst = isBstSubTree(node.left, min, node.val);
+      fillUpArrayList(node.left, nodesValues);
     }
-    if (!subTreeIsBst) {
-      return false;
-    }
+    nodesValues.add(node);
     if (node.right != null) {
-      int rightChildVal = node.right.val;
-      if (!withinRange(rightChildVal, node.val, max)) {
-        return false;
-      }
-      subTreeIsBst = isBstSubTree(node.right, node.val, max);
+      fillUpArrayList(node.right, nodesValues);
     }
-    return subTreeIsBst;
-  }
-
-  private boolean withinRange(int value, long min, long max) {
-    return value > min && value < max;
   }
 }
