@@ -15,7 +15,7 @@ public class PathSum2 {
 
   private static List<List<Integer>> paths;
   private static int target;
-  public List<List<Integer>> pathSum(TreeNode root, int sum) {
+  public List pathSum(TreeNode root, int sum) {
     if (root == null) {
       return Collections.EMPTY_LIST;
     }
